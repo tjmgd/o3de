@@ -1,0 +1,117 @@
+{
+    "Type": "JsonSerialization",
+    "Version": 1,
+    "ClassName": "PassAsset",
+    "ClassData": {
+        "PassTemplate": {
+            "Name": "DiffuseProbeGridDownsampleParentPassTemplate",
+            "PassClass": "DiffuseProbeGridDownsampleParentPass",
+            "Slots": [
+                {
+                    "Name": "NormalInput",
+                    "SlotType": "Input",
+                    "ScopeAttachmentUsage": "Shader"
+                },
+                {
+                    "Name": "DepthStencilTextureInput",
+                    "SlotType": "Input",
+                    "ScopeAttachmentUsage": "Shader",
+                    "ImageViewDesc": {
+                        "AspectFlags": [
+                            "Depth"
+                        ]
+                    }
+                },
+                {
+                    "Name": "DownsampledDepthOutput",
+                    "SlotType": "Output",
+                    "ScopeAttachmentUsage": "DepthStencil",
+                    "LoadStoreAction": {
+                        "LoadAction": "DontCare",
+                        "LoadActionStencil": "DontCare"
+                    }
+                },
+                {
+                    "Name": "DownsampledNormalOutput",
+                    "SlotType": "Output",
+                    "ScopeAttachmentUsage": "RenderTarget",
+                    "LoadStoreAction": {
+                        "LoadAction": "DontCare"
+                    }
+                },
+                {
+                    // Note: this is attached here to ensure that the image is cleared,
+                    // but it is not used as an output from the shader
+                    "Name": "IrradianceOutput",
+                    "SlotType": "Output",
+                    "ScopeAttachmentUsage": "RenderTarget",
+                    "LoadStoreAction": {
+                        "ClearValue": {
+                            "Value": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ]
+                        },
+                        "LoadAction": "Clear"
+                    }
+                },
+                {
+                    // See query below regarding this
+                    "Name": "DepthStencilTextureInput",
+                    "SlotType": "InputOutput",
+                    "ScopeAttachmentUsage": "DepthStencil"
+                }
+            ],
+            "Connections": [
+                {
+                    "LocalSlot": "DownsampledNormalOutput",
+                    "AttachmentRef": {
+                        "Pass": "DiffuseProbeGridDownsamplePass",
+                        "Attachment": "DownsampledNormalOutput"
+                    }
+                },
+                {
+                    "LocalSlot": "DownsampledDepthOutput",
+                    "AttachmentRef": {
+                        "Pass": "DiffuseProbeGridDownsamplePass",
+                        "Attachment": "DownsampledDepthOutput"
+                    }
+                },
+                {
+                    "LocalSlot": "IrradianceOutput",
+                    "AttachmentRef": {
+                        "Pass": "DiffuseProbeGridDownsamplePass",
+                        "Attachment": "IrradianceOutput"
+                    }
+                }
+            ],
+            "PassRequests": [
+                {
+                    "Name": "DiffuseProbeGridDownsamplePass",
+                    "TemplateName": "DiffuseProbeGridDownsamplePassTemplate",
+                    "Connections": [
+                        {
+                            "LocalSlot": "NormalInput",
+                            "AttachmentRef": {
+                                "Pass": "Parent",
+                                "Attachment": "NormalInput"
+                            }
+                        },
+                        {
+                            // If the DiffuseProbeGridDownsamplePass gets the DepthStencilInputOutput form DiffuseGlobalIllumination.pass, why does this need to be passed in?
+                            // Is it an error? Should there not be consistency in the direction of flow?
+                            // Note that this is just a copy of DepthStencilInputOutput being passed straight down.
+                            "LocalSlot": "DepthStencilTextureInput",
+                            "AttachmentRef": {
+                                "Pass": "Parent",
+                                "Attachment": "DepthStencilTextureInput"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

@@ -120,6 +120,7 @@ set(FILES
     Passes/DiffuseProbeGridBorderUpdate.pass
     Passes/DiffuseProbeGridClassification.pass
     Passes/DiffuseProbeGridDownsample.pass
+	Passes/DiffuseProbeGridDownsampleParent.pass
     Passes/DiffuseProbeGridRayTracing.pass
     Passes/DiffuseProbeGridRelocation.pass
     Passes/DiffuseProbeGridRender.pass

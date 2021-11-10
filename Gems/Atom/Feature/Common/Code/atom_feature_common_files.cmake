@@ -140,6 +140,8 @@ set(FILES
     Source/DiffuseGlobalIllumination/DiffuseProbeGridFeatureProcessor.cpp
     Source/DiffuseGlobalIllumination/DiffuseGlobalIlluminationFeatureProcessor.h
     Source/DiffuseGlobalIllumination/DiffuseGlobalIlluminationFeatureProcessor.cpp
+    Source/DiffuseGlobalIllumination/DiffuseProbeGridDownsampleParentPass.h
+	Source/DiffuseGlobalIllumination/DiffuseProbeGridDownsampleParentPass.cpp
     Source/DisplayMapper/AcesOutputTransformPass.cpp
     Source/DisplayMapper/AcesOutputTransformLutPass.cpp
     Source/DisplayMapper/ApplyShaperLookupTablePass.cpp

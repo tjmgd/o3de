@@ -30,8 +30,10 @@
             ],
             "PassRequests": [
                 {
-                    "Name": "DiffuseProbeGridDownsamplePass",
-                    "TemplateName": "DiffuseProbeGridDownsamplePassTemplate",
+                    //"Name": "DiffuseProbeGridDownsamplePass",
+                    //"TemplateName": "DiffuseProbeGridDownsamplePassTemplate",
+                    "Name": "DiffuseProbeGridDownsampleParentPass",
+                    "TemplateName": "DiffuseProbeGridDownsampleParentPassTemplate",
                     "Connections": [
                         {
                             "LocalSlot": "NormalInput",
@@ -56,7 +58,8 @@
                         {
                             "LocalSlot": "NormalInput",
                             "AttachmentRef": {
-                                "Pass": "DiffuseProbeGridDownsamplePass",
+                                //"Pass": "DiffuseProbeGridDownsamplePass",
+                                "Pass": "DiffuseProbeGridDownsampleParentPass",
                                 "Attachment": "DownsampledNormalOutput"
 
                             }
@@ -64,21 +67,24 @@
                         {
                             "LocalSlot": "DepthStencilInput",
                             "AttachmentRef": {
-                                "Pass": "DiffuseProbeGridDownsamplePass",
+                                //"Pass": "DiffuseProbeGridDownsamplePass",
+                                "Pass": "DiffuseProbeGridDownsampleParentPass",
                                 "Attachment": "DownsampledDepthOutput"
                             }
                         },
                         {
                             "LocalSlot": "DepthStencilTextureInput",
                             "AttachmentRef": {
-                                "Pass": "DiffuseProbeGridDownsamplePass",
+                                //"Pass": "DiffuseProbeGridDownsamplePass",
+                                "Pass": "DiffuseProbeGridDownsampleParentPass",
                                 "Attachment": "DownsampledDepthOutput"
                             }
                         },
                         {
                             "LocalSlot": "Output",
                             "AttachmentRef": {
-                                "Pass": "DiffuseProbeGridDownsamplePass",
+                                //"Pass": "DiffuseProbeGridDownsamplePass",
+                                "Pass": "DiffuseProbeGridDownsampleParentPass",
                                 "Attachment": "IrradianceOutput"
                             }
                         }
@@ -98,14 +104,16 @@
                         {
                             "LocalSlot": "DownsampledDepthStencilTextureInput",
                             "AttachmentRef": {
-                                "Pass": "DiffuseProbeGridDownsamplePass",
+                                //"Pass": "DiffuseProbeGridDownsamplePass",
+                                "Pass": "DiffuseProbeGridDownsampleParentPass",
                                 "Attachment": "DownsampledDepthOutput"
                             }
                         },
                         {
                             "LocalSlot": "DownsampledNormalInput",
                             "AttachmentRef": {
-                                "Pass": "DiffuseProbeGridDownsamplePass",
+                                //"Pass": "DiffuseProbeGridDownsamplePass",
+                                "Pass": "DiffuseProbeGridDownsampleParentPass",
                                 "Attachment": "DownsampledNormalOutput"
                             }
                         },

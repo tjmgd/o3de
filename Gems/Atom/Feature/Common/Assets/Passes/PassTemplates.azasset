@@ -432,6 +432,10 @@
                 "Name": "DiffuseProbeGridDownsamplePassTemplate",
                 "Path": "Passes/DiffuseProbeGridDownsample.pass"
             },
+			{
+                "Name": "DiffuseProbeGridDownsampleParentPassTemplate",
+                "Path": "Passes/DiffuseProbeGridDownsampleParent.pass"
+            },
             {
                 "Name": "DiffuseProbeGridRenderPassTemplate",
                 "Path": "Passes/DiffuseProbeGridRender.pass"

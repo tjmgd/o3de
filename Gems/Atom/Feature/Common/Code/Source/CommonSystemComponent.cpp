@@ -96,6 +96,7 @@
 #include <DiffuseGlobalIllumination/DiffuseProbeGridRelocationPass.h>
 #include <DiffuseGlobalIllumination/DiffuseProbeGridClassificationPass.h>
 #include <DiffuseGlobalIllumination/DiffuseProbeGridRenderPass.h>
+#include <DiffuseGlobalIllumination/DiffuseProbeGridDownsampleParentPass.h>
 #include <DiffuseGlobalIllumination/DiffuseProbeGridFeatureProcessor.h>
 #include <DiffuseGlobalIllumination/DiffuseGlobalIlluminationFeatureProcessor.h>
 #include <ReflectionScreenSpace/ReflectionScreenSpaceBlurPass.h>
@@ -278,6 +279,7 @@ namespace AZ
             passSystem->AddPassCreator(Name("DiffuseProbeGridRelocationPass"), &Render::DiffuseProbeGridRelocationPass::Create);
             passSystem->AddPassCreator(Name("DiffuseProbeGridClassificationPass"), &Render::DiffuseProbeGridClassificationPass::Create);
             passSystem->AddPassCreator(Name("DiffuseProbeGridRenderPass"), &Render::DiffuseProbeGridRenderPass::Create);
+            passSystem->AddPassCreator(Name("DiffuseProbeGridDownsampleParentPass"), &Render::DiffuseProbeGridDownsampleParentPass::Create);
 
             passSystem->AddPassCreator(Name("LuminanceHistogramGeneratorPass"), &LuminanceHistogramGeneratorPass::Create);
 
