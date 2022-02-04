@@ -86,7 +86,6 @@ set(FILES
     Passes/CascadedShadowmaps.pass
     Passes/CheckerboardResolveColor.pass
     Passes/CheckerboardResolveDepth.pass
-	Passes/ChromaticAbberation.pass
     Passes/ContrastAdaptiveSharpening.pass
     Passes/ConvertToAcescg.pass
     Passes/DebugOverlayParent.pass
@@ -143,6 +142,7 @@ set(FILES
     Passes/ForwardCheckerboard.pass
     Passes/ForwardMSAA.pass
     Passes/ForwardSubsurfaceMSAA.pass
+	Passes/FilmGrain.pass
     Passes/FullscreenCopy.pass
     Passes/FullscreenOutputOnly.pass
     Passes/HDRColorGrading.pass
@@ -391,8 +391,6 @@ set(FILES
     Shaders/PostProcessing/BloomCompositeCS.shader
     Shaders/PostProcessing/BloomDownsampleCS.azsl
     Shaders/PostProcessing/BloomDownsampleCS.shader
-	Shaders/PostProcessing/ChromaticAbberation.azsl
-	Shaders/PostProcessing/ChromaticAbberation.shader
     Shaders/PostProcessing/ContrastAdaptiveSharpening.azsl
     Shaders/PostProcessing/ContrastAdaptiveSharpening.shader
     Shaders/PostProcessing/ConvertToAcescg.azsl
@@ -434,6 +432,8 @@ set(FILES
     Shaders/PostProcessing/FastDepthAwareBlurHor.shader
     Shaders/PostProcessing/FastDepthAwareBlurVer.azsl
     Shaders/PostProcessing/FastDepthAwareBlurVer.shader
+	Shaders/PostProcessing/FilmGrain.azsl
+	Shaders/PostProcessing/FilmGrain.shader
     Shaders/PostProcessing/FullscreenCopy.azsl
     Shaders/PostProcessing/FullscreenCopy.shader
     Shaders/PostProcessing/HDRColorGrading.azsl

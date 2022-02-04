@@ -1,5 +1,5 @@
 {
-    "Source": "ChromaticAbberation.azsl",
+    "Source": "FilmGrain.azsl",
     "ProgramSettings": {
         "EntryPoints": [
             {

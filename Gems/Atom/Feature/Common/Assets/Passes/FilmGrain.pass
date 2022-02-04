@@ -4,8 +4,8 @@
     "ClassName": "PassAsset",
   "ClassData": {
     "PassTemplate": {
-      "Name": "ChromaticAbberationTemplate",
-      "PassClass": "ChromaticAbberationPass",
+      "Name": "FilmGrainTemplate",
+      "PassClass": "FilmGrainPass",
       "Slots": [
         {
           "Name": "Input",
@@ -23,7 +23,7 @@
       ],
       "ImageAttachments": [
         {
-          "Name": "ChromaticAbberation",
+          "Name": "FilmGrain",
           "SizeSource": {
             "Source": {
               "Pass": "This",
@@ -48,7 +48,7 @@
       "PassData": {
         "$type": "ComputePassData",
         "ShaderAsset": {
-          "FilePath": "Shaders/PostProcessing/ChromaticAbberation.shader"
+          "FilePath": "Shaders/PostProcessing/FilmGrain.shader"
         },
         "Make Fullscreen Pass": true
       },

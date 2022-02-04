@@ -214,8 +214,6 @@ set(FILES
     Source/PostProcessing/BloomCompositePass.cpp
     Source/PostProcessing/BloomParentPass.h
     Source/PostProcessing/BloomParentPass.cpp
-	Source/PostProcessing/ChromaticAbberationPass.h
-	Source/PostProcessing/ChromaticAbberationPass.cpp
     Source/PostProcessing/DepthOfFieldCompositePass.h
     Source/PostProcessing/DepthOfFieldCompositePass.cpp
     Source/PostProcessing/DepthOfFieldBokehBlurPass.h
@@ -236,6 +234,8 @@ set(FILES
     Source/PostProcessing/EyeAdaptationPass.h
     Source/PostProcessing/FastDepthAwareBlurPasses.cpp
     Source/PostProcessing/FastDepthAwareBlurPasses.h
+	Source/PostProcessing/FilmGrainPass.h
+	Source/PostProcessing/FilmGrainPass.cpp
     Source/PostProcessing/HDRColorGradingPass.cpp
     Source/PostProcessing/HDRColorGradingPass.h
     Source/PostProcessing/LookModificationCompositePass.cpp

@@ -6,26 +6,27 @@
  *
  */
 
-#include <PostProcessing/ChromaticAbberationPass.h>
+#include <PostProcessing/FilmGrainPass.h>
 #include <PostProcess/PostProcessFeatureProcessor.h>
+#include <Atom/RPI.Public/RenderPipeline.h>
 #include <Atom/RPI.Public/Scene.h>
 
 namespace AZ
 {
     namespace Render
     {
-        RPI::Ptr<ChromaticAbberationPass> ChromaticAbberationPass::Create(const RPI::PassDescriptor& descriptor)
+        RPI::Ptr<FilmGrainPass> FilmGrainPass::Create(const RPI::PassDescriptor& descriptor)
         {
-            RPI::Ptr<ChromaticAbberationPass> pass = aznew ChromaticAbberationPass(descriptor);
+            RPI::Ptr<FilmGrainPass> pass = aznew FilmGrainPass(descriptor);
             return AZStd::move(pass);
         }
 
-        ChromaticAbberationPass::ChromaticAbberationPass(const RPI::PassDescriptor& descriptor)
+        FilmGrainPass::FilmGrainPass(const RPI::PassDescriptor& descriptor)
             : RPI::ComputePass(descriptor)
         {
         }
 
-        bool ChromaticAbberationPass::IsEnabled() const
+        bool FilmGrainPass::IsEnabled() const
         {
             if (!ComputePass::IsEnabled())
             {
@@ -50,7 +51,7 @@ namespace AZ
             return true;
         }
 
-        void ChromaticAbberationPass::FrameBeginInternal(FramePrepareParams params)
+        void FilmGrainPass::FrameBeginInternal(FramePrepareParams params)
         {
             // Must match the struct in .azsl
             struct Constants
@@ -70,12 +71,12 @@ namespace AZ
                 PostProcessSettings* postProcessSettings = fp->GetLevelSettingsFromView(view);
                 if (postProcessSettings)
                 {
-                    ChromaticAbberationSettings* caSettings = postProcessSettings->GetChromaticAbberationSettings();
-                    if (caSettings)
+                    ChromaticAbberationSettings* settings = postProcessSettings->GetChromaticAbberationSettings();
+                    if (settings)
                     {
-                        if (caSettings->GetEnabled())
+                        if (settings->GetEnabled())
                         {
-                            constants.m_strength = caSettings->GetStrength();
+                            constants.m_strength = settings->GetStrength();
                             //etc
                         }
                         else
@@ -87,10 +88,10 @@ namespace AZ
                 }
             }*/
 
-            AZ_Assert(GetOutputCount() > 0, "ChromaticAbberationPass: No output bindings!");
+            AZ_Assert(GetOutputCount() > 0, "FilmGrainPass: No output bindings!");
             RPI::PassAttachment* outputAttachment = GetOutputBinding(0).m_attachment.get();
 
-            AZ_Assert(outputAttachment != nullptr, "ChromaticAbberationPass: Output binding has no attachment!");
+            AZ_Assert(outputAttachment != nullptr, "FilmGrainPass: Output binding has no attachment!");
             RHI::Size size = outputAttachment->m_descriptor.m_image.m_size;
 
             constants.m_outputSize[0] = size.m_width;

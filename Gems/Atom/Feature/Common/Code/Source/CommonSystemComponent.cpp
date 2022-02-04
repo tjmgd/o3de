@@ -67,7 +67,7 @@
 #include <PostProcessing/BloomDownsamplePass.h>
 #include <PostProcessing/BloomBlurPass.h>
 #include <PostProcessing/BloomCompositePass.h>
-#include <PostProcessing/ChromaticAbberationPass.h>
+#include <PostProcessing/FilmGrainPass.h>
 #include <ScreenSpace/DeferredFogPass.h>
 #include <Shadows/ProjectedShadowFeatureProcessor.h>
 #include <SkyBox/SkyBoxFogSettings.h>
@@ -269,8 +269,8 @@ namespace AZ
             passSystem->AddPassCreator(Name("BloomBlurPass"), &BloomBlurPass::Create);
             passSystem->AddPassCreator(Name("BloomCompositePass"), &BloomCompositePass::Create);
 
-            // Add Chromatic Abberation
-            passSystem->AddPassCreator(Name("ChromaticAbberationPass"), &ChromaticAbberationPass::Create);
+            // Add Film Grain
+            passSystem->AddPassCreator(Name("FilmGrainPass"), &FilmGrainPass::Create);
 
             // Add Diffuse Global Illumination passes
             passSystem->AddPassCreator(Name("RayTracingAccelerationStructurePass"), &Render::RayTracingAccelerationStructurePass::Create);

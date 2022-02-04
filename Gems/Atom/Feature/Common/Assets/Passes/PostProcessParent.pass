@@ -43,10 +43,10 @@
             "Connections": [
                 {
                     "LocalSlot": "Output",
-                    "AttachmentRef": {
-                        "Pass": "ChromaticAbberationPass",
-                        "Attachment": "Output"
-                    }
+                  "AttachmentRef": {
+                    "Pass": "FilmGrainPass",
+                    "Attachment": "Output"
+                  }
                 },
                 {
                     "LocalSlot": "RawLightingOutput",
@@ -204,8 +204,8 @@
               ]
             },
             {
-              "Name": "ChromaticAbberationPass",
-              "TemplateName": "ChromaticAbberationTemplate",
+              "Name": "FilmGrainPass",
+              "TemplateName": "FilmGrainTemplate",
               "Connections": [
                 {
                   "LocalSlot": "Input",

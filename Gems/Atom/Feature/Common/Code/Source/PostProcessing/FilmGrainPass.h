@@ -13,16 +13,16 @@ namespace AZ
 {
     namespace Render
     {
-        class ChromaticAbberationPass final : public RPI::ComputePass
+        class FilmGrainPass final : public RPI::ComputePass
         {
-            AZ_RPI_PASS(ChromaticAbberationPass);
+            AZ_RPI_PASS(FilmGrainPass);
 
         public:
-            AZ_RTTI(ChromaticAbberationPass, "{557EF771-7D60-4EF1-BD61-E2446237B85B}", AZ::RPI::ComputePass);
-            AZ_CLASS_ALLOCATOR(ChromaticAbberationPass, SystemAllocator, 0);
+            AZ_RTTI(FilmGrainPass, "{9575D0A9-72AF-47BD-AB4B-544E4C62A7F9}", AZ::RPI::ComputePass);
+            AZ_CLASS_ALLOCATOR(FilmGrainPass, SystemAllocator, 0);
 
-            ~ChromaticAbberationPass() = default;
-            static RPI::Ptr<ChromaticAbberationPass> Create(const RPI::PassDescriptor& descriptor);
+            ~FilmGrainPass() = default;
+            static RPI::Ptr<FilmGrainPass> Create(const RPI::PassDescriptor& descriptor);
 
             bool IsEnabled() const override;
 
@@ -31,7 +31,7 @@ namespace AZ
             void FrameBeginInternal(FramePrepareParams params) override;
 
         private:
-            ChromaticAbberationPass(const RPI::PassDescriptor& descriptor);
+            FilmGrainPass(const RPI::PassDescriptor& descriptor);
 
             AZ::RHI::ShaderInputNameIndex m_constantsIndex = "m_constants";
         };
