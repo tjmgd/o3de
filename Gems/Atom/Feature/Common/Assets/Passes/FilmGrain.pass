@@ -41,7 +41,7 @@
           "LocalSlot": "Output",
           "AttachmentRef": {
             "Pass": "This",
-            "Attachment": "ChromaticAbberation"
+            "Attachment": "FilmGrain"
           }
         }
       ],

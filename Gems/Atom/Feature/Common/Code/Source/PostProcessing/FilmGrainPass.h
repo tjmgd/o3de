@@ -27,7 +27,6 @@ namespace AZ
             bool IsEnabled() const override;
 
         protected:
-            // Behavior functions override...
             void FrameBeginInternal(FramePrepareParams params) override;
 
         private:

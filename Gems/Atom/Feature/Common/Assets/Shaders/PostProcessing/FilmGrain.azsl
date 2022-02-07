@@ -17,9 +17,7 @@ ShaderResourceGroup PassSrg : SRG_PerPass
     struct Constants
     {
         uint2 m_outputSize; // texture size of output
-        float2 m_outputCenter; // center of image in pixel coords
         float m_strength; // strength of effect (0 to 1)
-        float m_time;
     };
     Constants m_constants;
 }
@@ -43,10 +41,14 @@ void MainCS(uint3 dispatchThreadID : SV_DispatchThreadID)
     //float g = PassSrg::m_inputColor[dispatchThreadID.xy - trunc(offset * 0.5)].g;
     //float b = PassSrg::m_inputColor[dispatchThreadID.xy - trunc(offset)].b;
     float3 lumMagicNum = float3(0.21, 0.72, 0.07);
-    float lum = PassSrg::m_inputColor[dispatchThreadID.xy].xyz * lumMagicNum;
+    float lum = dot(PassSrg::m_inputColor[dispatchThreadID.xy].xyz, lumMagicNum);
 
-    //float grain = frac(10000.0 * sin(mad(PassSrg::m_constants.m_time, dispatchThreadID.x, dispatchThreadID.y)));
+    //float grain = frac(7919.6701 * sin(mad(PassSrg::m_constants.m_time, dispatchThreadID.x, dispatchThreadID.y)));
+    float grain = frac(7919.6701 * sin(SceneSrg::m_time * dot(dispatchThreadID.xy, float2(1232.3423, 23432.342))));
 
     //PassSrg::m_outputColor[dispatchThreadID.xy] = PassSrg::m_inputColor[dispatchThreadID.xy] + grain;
-    PassSrg::m_outputColor[dispatchThreadID.xy] = float4(lum, lum, lum, 1.0);
+    //PassSrg::m_outputColor[dispatchThreadID.xy] = mad(grain, (lum - lum * lum) * 4, PassSrg::m_inputColor[dispatchThreadID.xy]);
+    //PassSrg::m_outputColor[dispatchThreadID.xy] = mad(grain * PassSrg::m_constants.m_strength, (lum - lum * lum) * 4, PassSrg::m_inputColor[dispatchThreadID.xy]);
+    //float timetest = SceneSrg::m_time / 400.0;
+    PassSrg::m_outputColor[dispatchThreadID.xy] = float4(grain, grain, grain, 1.0);
 }

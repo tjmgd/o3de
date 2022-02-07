@@ -57,9 +57,7 @@ namespace AZ
             struct Constants
             {
                 AZStd::array<u32, 2> m_outputSize;
-                AZStd::array<float, 2> m_outputCenter;
                 float m_strength;
-                float m_time;
             } constants{};
 
             // FUTURE PROOFING WIP
@@ -96,10 +94,7 @@ namespace AZ
 
             constants.m_outputSize[0] = size.m_width;
             constants.m_outputSize[1] = size.m_height;
-            constants.m_outputCenter[0] = (size.m_width - 1) * 0.5f;
-            constants.m_outputCenter[1] = (size.m_height -1) * 0.5f;
-            constants.m_strength = 0.02f;
-            constants.m_time = 0.0f;
+            constants.m_strength = 0.5f;
 
             m_shaderResourceGroup->SetConstant(m_constantsIndex, constants);
 
