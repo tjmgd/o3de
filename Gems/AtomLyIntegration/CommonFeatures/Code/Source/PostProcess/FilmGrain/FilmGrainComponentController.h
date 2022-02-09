@@ -9,10 +9,13 @@
 #pragma once
 
 #include <AzCore/Component/Component.h>
-#include <AtomLyIntegration/CommonFeatures/PostProcess/ColorGrading/HDRColorGradingComponentConfig.h>
-#include <AtomLyIntegration/CommonFeatures/PostProcess/ColorGrading/HDRColorGradingBus.h>
+#include <AzCore/Component/TransformBus.h>
 
-#include <Atom/Feature/PostProcess/ColorGrading/HDRColorGradingSettingsInterface.h>
+#include <AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainBus.h>
+#include <AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainComponentConfig.h>
+
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h>
 #include <Atom/Feature/PostProcess/PostProcessFeatureProcessorInterface.h>
 #include <Atom/Feature/PostProcess/PostProcessSettingsInterface.h>
 
@@ -20,39 +23,38 @@ namespace AZ
 {
     namespace Render
     {
-        class HDRColorGradingComponentController final
-            : public HDRColorGradingRequestBus::Handler
+        class FilmGrainComponentController final : public FilmGrainRequestBus::Handler
         {
         public:
-            friend class EditorHDRColorGradingComponent;
+            friend class EditorFilmGrainComponent;
 
-            AZ_TYPE_INFO(AZ::Render::HDRColorGradingComponentController, "{9E708154-DA7D-4FCE-979F-457790FDAB78}");
+            AZ_TYPE_INFO(AZ::Render::FilmGrainComponentController, "{709B8FAA-E78F-404F-AD21-55E6A92400AD}");
             static void Reflect(AZ::ReflectContext* context);
             static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
             static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
             static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
 
-            HDRColorGradingComponentController() = default;
-            HDRColorGradingComponentController(const HDRColorGradingComponentConfig& config);
+            FilmGrainComponentController() = default;
+            FilmGrainComponentController(const FilmGrainComponentConfig& config);
 
             void Activate(EntityId entityId);
             void Deactivate();
-            void SetConfiguration(const HDRColorGradingComponentConfig& config);
-            const HDRColorGradingComponentConfig& GetConfiguration() const;
+            void SetConfiguration(const FilmGrainComponentConfig& config);
+            const FilmGrainComponentConfig& GetConfiguration() const;
 
             // Auto-gen function override declarations (functions definitions in .cpp)...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsOverride.inl>
-#include <Atom/Feature/PostProcess/ColorGrading/HDRColorGradingParams.inl>
+#include <Atom/Feature/PostProcess/Bloom/BloomParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
         private:
-            AZ_DISABLE_COPY(HDRColorGradingComponentController);
+            AZ_DISABLE_COPY(FilmGrainComponentController);
 
             void OnConfigChanged();
 
             PostProcessSettingsInterface* m_postProcessInterface = nullptr;
-            HDRColorGradingSettingsInterface* m_settingsInterface = nullptr;
-            HDRColorGradingComponentConfig m_configuration;
+            FilmGrainSettingsInterface* m_settingsInterface = nullptr;
+            FilmGrainComponentConfig m_configuration;
             EntityId m_entityId;
         };
     } // namespace Render

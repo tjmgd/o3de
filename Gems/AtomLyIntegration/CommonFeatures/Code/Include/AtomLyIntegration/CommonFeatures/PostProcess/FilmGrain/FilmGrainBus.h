@@ -8,30 +8,30 @@
 
 #pragma once
 
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
 #include <AzCore/Component/Component.h>
-#include <Atom/Feature/PostProcess/Bloom/BloomConstants.h>
 
 namespace AZ
 {
     namespace Render
     {
-        class BloomRequests
-            : public ComponentBus
+        class FilmGrainRequests : public ComponentBus
         {
         public:
-            AZ_RTTI(AZ::Render::BloomRequests, "{F2932B5C-6311-4A6D-8E1C-E70A69A3582B}");
+            AZ_RTTI(AZ::Render::FilmGrainRequests, "{D94212E5-9954-4BDA-B38E-05C6B9566862}");
 
             /// Overrides the default AZ::EBusTraits handler policy to allow one listener only.
             static const EBusHandlerPolicy HandlerPolicy = EBusHandlerPolicy::Single;
-            virtual ~BloomRequests() {}
+            virtual ~FilmGrainRequests()
+            {
+            }
 
             // Auto-gen virtual getters/setters...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsVirtual.inl>
-#include <Atom/Feature/PostProcess/Bloom/BloomParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
-
         };
 
-        typedef AZ::EBus<BloomRequests> BloomRequestBus;
-    }
-}
+        typedef AZ::EBus<FilmGrainRequests> FilmGrainRequestBus;
+    } // namespace Render
+} // namespace AZ

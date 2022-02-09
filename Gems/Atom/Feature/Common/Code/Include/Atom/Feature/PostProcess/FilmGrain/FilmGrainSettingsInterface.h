@@ -8,26 +8,26 @@
 
 #pragma once
 
-#include <AzCore/RTTI/RTTI.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
 #include <AzCore/Component/EntityId.h>
-#include <Atom/Feature/PostProcess/Bloom/BloomConstants.h>
+#include <AzCore/RTTI/RTTI.h>
 
 namespace AZ
 {
     namespace Render
     {
-        class BloomSettingsInterface
+        class FilmGrainSettingsInterface
         {
         public:
-            AZ_RTTI(AZ::Render::BloomSettingsInterface, "{BA38BDEC-F431-4BE8-9073-6C751DA1D0EE}");
+            AZ_RTTI(AZ::Render::FilmGrainSettingsInterface, "{E2F4009A-6DCC-4B7F-AD2B-E14F3F2E6E35}");
 
             // Auto-gen virtual getter and setter functions...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsVirtual.inl>
-#include <Atom/Feature/PostProcess/Bloom/BloomParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
             virtual void OnConfigChanged() = 0;
         };
 
-    }
-}
+    } // namespace Render
+} // namespace AZ

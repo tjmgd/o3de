@@ -14,7 +14,7 @@ namespace AZ
 {
     namespace Render
     {
-        namespace Bloom
+        namespace FilmGrain
         {
             static constexpr uint8_t MaxStageCount = 5;
 
@@ -36,6 +36,6 @@ namespace AZ
             static constexpr bool DefaultEnableBicubicFilter = false;
 
             static constexpr float DefaultIntensity = 0.5f;
-        }
-    }
-}
+        } // namespace FilmGrain
+    } // namespace Render
+} // namespace AZ

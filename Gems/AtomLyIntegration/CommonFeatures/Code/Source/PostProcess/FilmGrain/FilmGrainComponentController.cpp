@@ -10,33 +10,31 @@
 
 #include <Atom/RPI.Public/Scene.h>
 
-#include <PostProcess/ColorGrading/HDRColorGradingComponentController.h>
+#include <PostProcess/FilmGrain/FilmGrainComponentController.h>
 
 namespace AZ
 {
     namespace Render
     {
-        void HDRColorGradingComponentController::Reflect(ReflectContext* context)
+        void FilmGrainComponentController::Reflect(ReflectContext* context)
         {
-            HDRColorGradingComponentConfig::Reflect(context);
+            FilmGrainComponentConfig::Reflect(context);
 
             if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
             {
-                serializeContext->Class<HDRColorGradingComponentController>()
-                    ->Version(0)
-                    ->Field("Configuration", &HDRColorGradingComponentController::m_configuration);
+                serializeContext->Class<FilmGrainComponentController>()->Version(0)->Field(
+                    "Configuration", &FilmGrainComponentController::m_configuration);
             }
 
-            if (auto* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
+            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
             {
-                behaviorContext->EBus<HDRColorGradingRequestBus>("HDRColorGradingRequestBus")
+                behaviorContext->EBus<FilmGrainRequestBus>("FilmGrainRequestBus")
                     ->Attribute(AZ::Script::Attributes::Module, "render")
                     ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
-
-                    // Auto-gen behavior context...
-#define PARAM_EVENT_BUS HDRColorGradingRequestBus::Events
+                // Auto-gen behavior context...
+#define PARAM_EVENT_BUS FilmGrainRequestBus::Events
 #include <Atom/Feature/ParamMacros/StartParamBehaviorContext.inl>
-#include <Atom/Feature/PostProcess/ColorGrading/HDRColorGradingParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 #undef PARAM_EVENT_BUS
 
@@ -44,28 +42,27 @@ namespace AZ
             }
         }
 
-        void HDRColorGradingComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void FilmGrainComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
         {
-            provided.push_back(AZ_CRC_CE("HDRColorGradingService"));
+            provided.push_back(AZ_CRC_CE("FilmGrainService"));
         }
 
-        void HDRColorGradingComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void FilmGrainComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
         {
-            incompatible.push_back(AZ_CRC_CE("HDRColorGradingService"));
-            incompatible.push_back(AZ_CRC_CE("LookModificationService"));
+            incompatible.push_back(AZ_CRC_CE("FilmGrainService"));
         }
 
-        void HDRColorGradingComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void FilmGrainComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }
 
-        HDRColorGradingComponentController::HDRColorGradingComponentController(const HDRColorGradingComponentConfig& config)
+        FilmGrainComponentController::FilmGrainComponentController(const FilmGrainComponentConfig& config)
             : m_configuration(config)
         {
         }
 
-        void HDRColorGradingComponentController::Activate(EntityId entityId)
+        void FilmGrainComponentController::Activate(EntityId entityId)
         {
             m_entityId = entityId;
 
@@ -76,20 +73,20 @@ namespace AZ
                 m_postProcessInterface = fp->GetOrCreateSettingsInterface(m_entityId);
                 if (m_postProcessInterface)
                 {
-                    m_settingsInterface = m_postProcessInterface->GetOrCreateHDRColorGradingSettingsInterface();
+                    m_settingsInterface = m_postProcessInterface->GetOrCreateFilmGrainSettingsInterface();
                     OnConfigChanged();
                 }
             }
-            HDRColorGradingRequestBus::Handler::BusConnect(m_entityId);
+            FilmGrainRequestBus::Handler::BusConnect(m_entityId);
         }
 
-        void HDRColorGradingComponentController::Deactivate()
+        void FilmGrainComponentController::Deactivate()
         {
-            HDRColorGradingRequestBus::Handler::BusDisconnect(m_entityId);
+            FilmGrainRequestBus::Handler::BusDisconnect(m_entityId);
 
             if (m_postProcessInterface)
             {
-                m_postProcessInterface->RemoveHDRColorGradingSettingsInterface();
+                m_postProcessInterface->RemoveFilmGrainSettingsInterface();
             }
 
             m_postProcessInterface = nullptr;
@@ -97,18 +94,20 @@ namespace AZ
             m_entityId.SetInvalid();
         }
 
-        void HDRColorGradingComponentController::SetConfiguration(const HDRColorGradingComponentConfig& config)
+        // Getters & Setters...
+
+        void FilmGrainComponentController::SetConfiguration(const FilmGrainComponentConfig& config)
         {
             m_configuration = config;
             OnConfigChanged();
         }
 
-        const HDRColorGradingComponentConfig& HDRColorGradingComponentController::GetConfiguration() const
+        const FilmGrainComponentConfig& FilmGrainComponentController::GetConfiguration() const
         {
             return m_configuration;
         }
 
-        void HDRColorGradingComponentController::OnConfigChanged()
+        void FilmGrainComponentController::OnConfigChanged()
         {
             if (m_settingsInterface)
             {
@@ -121,27 +120,43 @@ namespace AZ
         // The setter functions will set the values on the Atom settings class, then get the value back
         // from the settings class to set the local configuration. This is in case the settings class
         // applies some custom logic that results in the set value being different from the input
-#define AZ_GFX_COMMON_PARAM(ValueType, Name, MemberName, DefaultValue)                                                                         \
-        ValueType HDRColorGradingComponentController::Get##Name() const                                                                        \
-        {                                                                                                                                      \
-            return m_configuration.MemberName;                                                                                                 \
-        }                                                                                                                                      \
-        void HDRColorGradingComponentController::Set##Name(ValueType val)                                                                      \
-        {                                                                                                                                      \
-            if (m_settingsInterface)                                                                                                           \
-            {                                                                                                                                  \
-                m_settingsInterface->Set##Name(val);                                                                                           \
-                m_settingsInterface->OnConfigChanged();                                                                                        \
-                m_configuration.MemberName = m_settingsInterface->Get##Name();                                                                 \
-            }                                                                                                                                  \
-            else                                                                                                                               \
-            {                                                                                                                                  \
-                m_configuration.MemberName = val;                                                                                              \
-            }                                                                                                                                  \
-        }
+#define AZ_GFX_COMMON_PARAM(ValueType, Name, MemberName, DefaultValue)                                                                     \
+    ValueType FilmGrainComponentController::Get##Name() const                                                                                  \
+    {                                                                                                                                      \
+        return m_configuration.MemberName;                                                                                                 \
+    }                                                                                                                                      \
+    void FilmGrainComponentController::Set##Name(ValueType val)                                                                                \
+    {                                                                                                                                      \
+        if (m_settingsInterface)                                                                                                           \
+        {                                                                                                                                  \
+            m_settingsInterface->Set##Name(val);                                                                                           \
+            m_settingsInterface->OnConfigChanged();                                                                                        \
+            m_configuration.MemberName = m_settingsInterface->Get##Name();                                                                 \
+        }                                                                                                                                  \
+        else                                                                                                                               \
+        {                                                                                                                                  \
+            m_configuration.MemberName = val;                                                                                              \
+        }                                                                                                                                  \
+    }
+
+#define AZ_GFX_COMMON_OVERRIDE(ValueType, Name, MemberName, OverrideValueType)                                                             \
+    OverrideValueType FilmGrainComponentController::Get##Name##Override() const                                                                \
+    {                                                                                                                                      \
+        return m_configuration.MemberName##Override;                                                                                       \
+    }                                                                                                                                      \
+    void FilmGrainComponentController::Set##Name##Override(OverrideValueType val)                                                              \
+    {                                                                                                                                      \
+        m_configuration.MemberName##Override = val;                                                                                        \
+        if (m_settingsInterface)                                                                                                           \
+        {                                                                                                                                  \
+            m_settingsInterface->Set##Name##Override(val);                                                                                 \
+            m_settingsInterface->OnConfigChanged();                                                                                        \
+        }                                                                                                                                  \
+    }
 
 #include <Atom/Feature/ParamMacros/MapAllCommon.inl>
-#include <Atom/Feature/PostProcess/ColorGrading/HDRColorGradingParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
+
     } // namespace Render
 } // namespace AZ

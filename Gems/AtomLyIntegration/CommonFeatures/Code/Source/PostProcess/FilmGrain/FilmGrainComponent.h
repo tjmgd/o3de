@@ -8,24 +8,30 @@
 
 #pragma once
 
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
+#include <AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainComponentConfig.h>
 #include <AzCore/Component/Component.h>
 #include <AzFramework/Components/ComponentAdapter.h>
-#include <PostProcess/ColorGrading/HDRColorGradingComponentController.h>
-#include <AtomLyIntegration/CommonFeatures/PostProcess/ColorGrading/HDRColorGradingComponentConfig.h>
+#include <PostProcess/FilmGrain/FilmGrainComponentController.h>
 
 namespace AZ
 {
     namespace Render
     {
-        class HDRColorGradingComponent final
-            : public AzFramework::Components::ComponentAdapter<HDRColorGradingComponentController, HDRColorGradingComponentConfig>
+        namespace FilmGrain
+        {
+            static constexpr const char* const FilmGrainComponentTypeId = "{4974D677-E5F3-4148-8BEF-725DF43C2886}";
+        }
+
+        class FilmGrainComponent final
+            : public AzFramework::Components::ComponentAdapter<FilmGrainComponentController, FilmGrainComponentConfig>
         {
         public:
-            using BaseClass = AzFramework::Components::ComponentAdapter<HDRColorGradingComponentController, HDRColorGradingComponentConfig>;
-            AZ_COMPONENT(AZ::Render::HDRColorGradingComponent, "{9A955A14-8FB9-433D-924E-2E19F74361DD}", BaseClass);
+            using BaseClass = AzFramework::Components::ComponentAdapter<FilmGrainComponentController, FilmGrainComponentConfig>;
+            AZ_COMPONENT(AZ::Render::FilmGrainComponent, FilmGrain::FilmGrainComponentTypeId, BaseClass);
 
-            HDRColorGradingComponent() = default;
-            HDRColorGradingComponent(const HDRColorGradingComponentConfig& config);
+            FilmGrainComponent() = default;
+            FilmGrainComponent(const FilmGrainComponentConfig& config);
 
             static void Reflect(AZ::ReflectContext* context);
         };

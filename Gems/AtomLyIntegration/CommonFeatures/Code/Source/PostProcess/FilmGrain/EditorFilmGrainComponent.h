@@ -8,54 +8,36 @@
 
 #pragma once
 
-#include <AzCore/Component/TickBus.h>
+#include <Atom/Feature/PostProcess/DepthOfField/DepthOfFieldConstants.h>
 #include <AzToolsFramework/ToolsComponents/EditorComponentAdapter.h>
-#include <Atom/Feature/Utils/FrameCaptureBus.h>
-#include <PostProcess/ColorGrading/HDRColorGradingComponent.h>
+#include <PostProcess/FilmGrain/FilmGrainComponent.h>
 
 namespace AZ
 {
     namespace Render
     {
-        static constexpr const char* const TempTiffFilePath{ "@usercache@/LutGeneration/SavedLut_%s.tiff" };
-        static constexpr const char* const GeneratedLutRelativePath = { "LutGeneration/SavedLut_%s" };
-        static constexpr const char* const TiffToAzassetPythonScriptPath{ "@engroot@/Gems/Atom/Feature/Common/Editor/Scripts/ColorGrading/tiff_to_3dl_azasset.py" };
-        static constexpr const char* const ActivateLutAssetPythonScriptPath{ "@engroot@/Gems/Atom/Feature/Common/Editor/Scripts/ColorGrading/activate_lut_asset.py" };
+        namespace FilmGrain
+        {
+            static constexpr const char* const EditorFilmGrainComponentTypeId = "{4D16E2A4-3F49-40FC-9667-D24B272CADFA}";
+        }
 
-        class EditorHDRColorGradingComponent final
+        class EditorFilmGrainComponent final
             : public AzToolsFramework::Components::
-                  EditorComponentAdapter<HDRColorGradingComponentController, HDRColorGradingComponent, HDRColorGradingComponentConfig>
-            , private TickBus::Handler
-            , private FrameCaptureNotificationBus::Handler
+                  EditorComponentAdapter<FilmGrainComponentController, FilmGrainComponent, FilmGrainComponentConfig>
         {
         public:
-            using BaseClass = AzToolsFramework::Components::EditorComponentAdapter<HDRColorGradingComponentController, HDRColorGradingComponent, HDRColorGradingComponentConfig>;
-            AZ_EDITOR_COMPONENT(AZ::Render::EditorHDRColorGradingComponent, "{088C3824-82D1-4216-83BE-809C6CECC457}", BaseClass);
+            using BaseClass = AzToolsFramework::Components::
+                EditorComponentAdapter<FilmGrainComponentController, FilmGrainComponent, FilmGrainComponentConfig>;
+            AZ_EDITOR_COMPONENT(AZ::Render::EditorFilmGrainComponent, FilmGrain::EditorFilmGrainComponentTypeId, BaseClass);
 
             static void Reflect(AZ::ReflectContext* context);
 
-            EditorHDRColorGradingComponent() = default;
-            EditorHDRColorGradingComponent(const HDRColorGradingComponentConfig& config);
+            EditorFilmGrainComponent() = default;
+            EditorFilmGrainComponent(const FilmGrainComponentConfig& config);
 
             //! EditorRenderComponentAdapter overrides...
             AZ::u32 OnConfigurationChanged() override;
-
-        private:
-            // AZ::TickBus overrides ...
-            void OnTick(float deltaTime, AZ::ScriptTimePoint time) override;
-
-            // FrameCaptureNotificationBus overrides ...
-            void OnCaptureFinished(AZ::Render::FrameCaptureResult result, const AZStd::string& info) override;
-
-            void GenerateLut();
-            AZ::u32 ActivateLut();
-            bool GetGeneratedLutVisibilitySettings();
-
-            bool m_waitOneFrame = false;
-            AZStd::string m_currentTiffFilePath;
-            AZStd::string m_currentLutFilePath;
-
-            AZStd::string m_generatedLutAbsolutePath;
         };
+
     } // namespace Render
 } // namespace AZ

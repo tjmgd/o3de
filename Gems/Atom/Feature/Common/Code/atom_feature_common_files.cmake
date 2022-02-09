@@ -198,6 +198,8 @@ set(FILES
     Source/PostProcess/DepthOfField/DepthOfFieldSettings.h
     Source/PostProcess/ExposureControl/ExposureControlSettings.cpp
     Source/PostProcess/ExposureControl/ExposureControlSettings.h
+	Source/PostProcess/FilmGrain/FilmGrainSettings.cpp
+    Source/PostProcess/FilmGrain/FilmGrainSettings.h
     Source/PostProcess/Ssao/SsaoSettings.cpp
     Source/PostProcess/Ssao/SsaoSettings.h
     Source/PostProcess/LookModification/LookModificationSettings.cpp

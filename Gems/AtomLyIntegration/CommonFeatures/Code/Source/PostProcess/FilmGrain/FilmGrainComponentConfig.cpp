@@ -6,32 +6,31 @@
  *
  */
 
-#include <AtomLyIntegration/CommonFeatures/PostProcess/Ssao/SsaoComponentConfiguration.h>
-#include <AzCore/Serialization/SerializeContext.h>
+#include <AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainComponentConfig.h>
 #include <AzCore/Serialization/EditContext.h>
+#include <AzCore/Serialization/SerializeContext.h>
 
 namespace AZ
 {
     namespace Render
     {
-        void SsaoComponentConfig::Reflect(ReflectContext* context)
+        void FilmGrainComponentConfig::Reflect(ReflectContext* context)
         {
             if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
             {
-                serializeContext->Class<SsaoComponentConfig, ComponentConfig>()
-                    ->Version(0)
+                serializeContext->Class<FilmGrainComponentConfig, ComponentConfig>()->Version(0)
 
-                    // Auto-gen serialize context code...
-#define SERIALIZE_CLASS SsaoComponentConfig
+                // Auto-gen serialize context code...
+#define SERIALIZE_CLASS FilmGrainComponentConfig
 #include <Atom/Feature/ParamMacros/StartParamSerializeContext.inl>
-#include <Atom/Feature/PostProcess/Ssao/SsaoParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 #undef SERIALIZE_CLASS
                     ;
             }
         }
 
-        void SsaoComponentConfig::CopySettingsFrom(SsaoSettingsInterface* settings)
+        void FilmGrainComponentConfig::CopySettingsFrom(FilmGrainSettingsInterface* settings)
         {
             if (!settings)
             {
@@ -40,12 +39,12 @@ namespace AZ
 
 #define COPY_SOURCE settings
 #include <Atom/Feature/ParamMacros/StartParamCopySettingsFrom.inl>
-#include <Atom/Feature/PostProcess/Ssao/SsaoParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 #undef COPY_SOURCE
         }
 
-        void SsaoComponentConfig::CopySettingsTo(SsaoSettingsInterface* settings)
+        void FilmGrainComponentConfig::CopySettingsTo(FilmGrainSettingsInterface* settings)
         {
             if (!settings)
             {
@@ -54,7 +53,7 @@ namespace AZ
 
 #define COPY_TARGET settings
 #include <Atom/Feature/ParamMacros/StartParamCopySettingsTo.inl>
-#include <Atom/Feature/PostProcess/Ssao/SsaoParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 #undef COPY_TARGET
         }

@@ -8,35 +8,37 @@
 
 #pragma once
 
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h>
 #include <AzCore/Component/Component.h>
-#include <Atom/Feature/PostProcess/Bloom/BloomSettingsInterface.h>
 
 namespace AZ
 {
     namespace Render
     {
-        class BloomComponentConfig final
-            : public ComponentConfig
+        class FilmGrainComponentConfig final : public ComponentConfig
         {
         public:
-            AZ_RTTI(AZ::Render::BloomComponentConfig, "{752EB33B-6155-43E4-9EC9-86E86046E066}", AZ::ComponentConfig);
+            AZ_RTTI(AZ::Render::FilmGrainComponentConfig, "{A29D2BBE-0472-49AF-8068-B3AB779F9099}", AZ::ComponentConfig);
 
             static void Reflect(ReflectContext* context);
 
             // Generate members...
 #include <Atom/Feature/ParamMacros/StartParamMembers.inl>
-#include <Atom/Feature/PostProcess/Bloom/BloomParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
             // Generate Getters/Setters...
 #include <Atom/Feature/ParamMacros/StartParamFunctions.inl>
-#include <Atom/Feature/PostProcess/Bloom/BloomParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
-            void CopySettingsFrom(BloomSettingsInterface* settings);
-            void CopySettingsTo(BloomSettingsInterface* settings);
+            void CopySettingsFrom(FilmGrainSettingsInterface* settings);
+            void CopySettingsTo(FilmGrainSettingsInterface* settings);
 
-            bool ArePropertiesReadOnly() const { return !m_enabled; }
+            bool ArePropertiesReadOnly() const
+            {
+                return !m_enabled;
+            }
         };
-    }
-}
+    } // namespace Render
+} // namespace AZ
