@@ -96,6 +96,19 @@ namespace AZ
             constants.m_outputSize[1] = size.m_height;
             constants.m_strength = 0.5f;
 
+            /*      
+                    propertyIndex = material->FindPropertyIndex(AZ::Name("baseColor.textureMap"));
+                    if (propertyIndex.IsValid())
+                    {
+                        Data::Instance<RPI::Image> image = material->GetPropertyValue<Data::Instance<RPI::Image>>(propertyIndex);
+                        if (image.get())
+                        {
+                            subMesh.m_textureFlags |= RayTracingSubMeshTextureFlags::BaseColor;
+                            subMesh.m_baseColorImageView = image->GetImageView();
+                        }
+                    }
+            */
+
             m_shaderResourceGroup->SetConstant(m_constantsIndex, constants);
 
             RPI::ComputePass::FrameBeginInternal(params);

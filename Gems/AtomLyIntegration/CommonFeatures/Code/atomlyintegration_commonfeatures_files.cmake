@@ -108,6 +108,11 @@ set(FILES
     Source/PostProcess/Ssao/SsaoComponentConfig.cpp
     Source/PostProcess/Ssao/SsaoComponentController.cpp
     Source/PostProcess/Ssao/SsaoComponentController.h
+	Source/PostProcess/FilmGrain/FilmGrainComponent.cpp
+    Source/PostProcess/FilmGrain/FilmGrainComponent.h
+	Source/PostProcess/FilmGrain/FilmGrainComponentConfig.cpp
+    Source/PostProcess/FilmGrain/FilmGrainComponentController.cpp
+    Source/PostProcess/FilmGrain/FilmGrainComponentController.h
     Source/PostProcess/LookModification/LookModificationComponent.cpp
     Source/PostProcess/LookModification/LookModificationComponent.h
     Source/PostProcess/LookModification/LookModificationComponentConfig.cpp

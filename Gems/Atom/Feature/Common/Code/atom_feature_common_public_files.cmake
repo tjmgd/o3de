@@ -62,6 +62,9 @@ set(FILES
     Include/Atom/Feature/PostProcess/Ssao/SsaoConstants.h
     Include/Atom/Feature/PostProcess/Ssao/SsaoParams.inl
     Include/Atom/Feature/PostProcess/Ssao/SsaoSettingsInterface.h
+	Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h
+    Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl
+    Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h
     Include/Atom/Feature/PostProcess/LookModification/LookModificationParams.inl
     Include/Atom/Feature/PostProcess/LookModification/LookModificationSettingsInterface.h
     Include/Atom/Feature/ScreenSpace/DeferredFogSettingsInterface.h

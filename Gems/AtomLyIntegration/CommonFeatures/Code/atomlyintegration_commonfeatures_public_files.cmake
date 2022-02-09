@@ -43,6 +43,8 @@ set(FILES
     Include/AtomLyIntegration/CommonFeatures/PostProcess/ColorGrading/HDRColorGradingComponentConfig.h
     Include/AtomLyIntegration/CommonFeatures/PostProcess/Ssao/SsaoBus.h
     Include/AtomLyIntegration/CommonFeatures/PostProcess/Ssao/SsaoComponentConfiguration.h
+	Include/AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainBus.h
+    Include/AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainComponentConfig.h
     Include/AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationBus.h
     Include/AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationComponentConfig.h
     Include/AtomLyIntegration/CommonFeatures/PostProcess/LookModification/LookModificationComponentConstants.h

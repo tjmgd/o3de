@@ -68,6 +68,8 @@ set(FILES
     Source/PostProcess/DisplayMapper/EditorDisplayMapperComponent.h
     Source/PostProcess/ExposureControl/EditorExposureControlComponent.cpp
     Source/PostProcess/ExposureControl/EditorExposureControlComponent.h
+	Source/PostProcess/FilmGrain/EditorFilmGrainComponent.h
+    Source/PostProcess/FilmGrain/EditorFilmGrainComponent.cpp
     Source/PostProcess/Ssao/EditorSsaoComponent.cpp
     Source/PostProcess/Ssao/EditorSsaoComponent.h
     Source/PostProcess/LookModification/EditorLookModificationComponent.cpp
