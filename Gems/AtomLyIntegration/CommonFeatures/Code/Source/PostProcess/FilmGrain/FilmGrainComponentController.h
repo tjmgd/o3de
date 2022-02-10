@@ -44,7 +44,7 @@ namespace AZ
 
             // Auto-gen function override declarations (functions definitions in .cpp)...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsOverride.inl>
-#include <Atom/Feature/PostProcess/Bloom/BloomParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
         private:

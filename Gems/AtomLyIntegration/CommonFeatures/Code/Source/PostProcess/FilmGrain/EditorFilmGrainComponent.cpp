@@ -48,122 +48,21 @@ namespace AZ
                         ->Attribute(AZ::Edit::Attributes::Visibility, AZ::Edit::PropertyVisibility::ShowChildrenOnly);
 
                     editContext->Class<FilmGrainComponentConfig>("FilmGrainComponentConfig", "")
-                        ->DataElement(Edit::UIHandlers::CheckBox, &FilmGrainComponentConfig::m_enabled, "Enable Bloom", "Enable Bloom.")
+                        ->DataElement(Edit::UIHandlers::CheckBox, &FilmGrainComponentConfig::m_enabled, "Enable Film Grain", "Enable Film Grain.")
                         ->Attribute(Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
 
                         ->DataElement(
-                            AZ::Edit::UIHandlers::Default, &FilmGrainComponentConfig::m_threshold, "Threshold",
-                            "How bright is the light source bloom applied to ")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_knee, "Knee",
-                            "Soft knee to smoothen edge of threshold")
+                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_strength, "Strength",
+                            "Strength of effect")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
                         ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_intensity, "Intensity", "Brightness of bloom")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 10000.0f)
-                        ->Attribute(AZ::Edit::Attributes::SoftMax, 25.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::CheckBox, &FilmGrainComponentConfig::m_enableBicubic, "Enable Bicubic",
-                            "Enable bicubic filter for upsampling")
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        // Kernel sizes
-                        ->ClassElement(AZ::Edit::ClassElements::Group, "Kernel Size")
-                        ->Attribute(AZ::Edit::Attributes::AutoExpand, false)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_kernelSizeScale, "Kernel Size Scale",
-                            "Global scaling factor of kernel size")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 2.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_kernelSizeStage0, "Kernel Size 0",
-                            "Kernel size for blur stage 0 in percent of screen width")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_kernelSizeStage1, "Kernel Size 1",
-                            "Kernel size for blur stage 1 in percent of screen width")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_kernelSizeStage2, "Kernel Size 2",
-                            "Kernel size for blur stage 2 in percent of screen width")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_kernelSizeStage3, "Kernel Size 3",
-                            "Kernel size for blur stage 3 in percent of screen width")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_kernelSizeStage4, "Kernel Size 4",
-                            "Kernel size for blur stage 4 in percent of screen width")
-                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
-                        ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        // Tints
-                        ->ClassElement(AZ::Edit::ClassElements::Group, "Tint")
-                        ->Attribute(AZ::Edit::Attributes::AutoExpand, false)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Color, &FilmGrainComponentConfig::m_tintStage0, "Tint 0", "Tint for blur stage 0")
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Color, &FilmGrainComponentConfig::m_tintStage1, "Tint 1", "Tint for blur stage 1")
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Color, &FilmGrainComponentConfig::m_tintStage2, "Tint 2", "Tint for blur stage 2")
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Color, &FilmGrainComponentConfig::m_tintStage3, "Tint 3", "Tint for blur stage 3")
-                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
-                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
-
-                        ->DataElement(
-                            AZ::Edit::UIHandlers::Color, &FilmGrainComponentConfig::m_tintStage4, "Tint 4", "Tint for blur stage 4")
                         ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
                         ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
 
                         // Overrides
                         ->ClassElement(AZ::Edit::ClassElements::Group, "Overrides")
                         ->Attribute(AZ::Edit::Attributes::AutoExpand, false)
+
                     // Auto-gen editor context settings for overrides
 #define EDITOR_CLASS FilmGrainComponentConfig
 #include <Atom/Feature/ParamMacros/StartOverrideEditorContext.inl>

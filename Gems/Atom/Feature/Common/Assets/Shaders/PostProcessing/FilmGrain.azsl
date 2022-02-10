@@ -40,5 +40,7 @@ void MainCS(uint3 dispatchThreadID : SV_DispatchThreadID)
     //PassSrg::m_outputColor[dispatchThreadID.xy] = mad(grain, (lum - lum * lum) * 4, PassSrg::m_inputColor[dispatchThreadID.xy]);
     //PassSrg::m_outputColor[dispatchThreadID.xy] = mad(grain * PassSrg::m_constants.m_strength, (lum - lum * lum) * 4, PassSrg::m_inputColor[dispatchThreadID.xy]);
     //float timetest = SceneSrg::m_time / 400.0;
-    PassSrg::m_outputColor[dispatchThreadID.xy] = float4(grain, grain, grain, 1.0);
+    //PassSrg::m_outputColor[dispatchThreadID.xy] = float4(grain, grain, grain, 1.0);
+    PassSrg::m_outputColor[dispatchThreadID.xy] = float4(lum, lum, lum, 1.0);
+
 }

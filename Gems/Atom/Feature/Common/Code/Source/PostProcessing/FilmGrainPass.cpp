@@ -48,7 +48,12 @@ namespace AZ
             {
                 return true;
             }
-            return true;
+            const FilmGrainSettings* filmGrainSettings = postProcessSettings->GetFilmGrainSettings();
+            if (!filmGrainSettings)
+            {
+                return true;
+            }
+            return (filmGrainSettings != nullptr) && filmGrainSettings->GetEnabled();
         }
 
         void FilmGrainPass::FrameBeginInternal(FramePrepareParams params)
@@ -59,32 +64,6 @@ namespace AZ
                 AZStd::array<u32, 2> m_outputSize;
                 float m_strength;
             } constants{};
-
-            // FUTURE PROOFING WIP
-            /* RPI::Scene* scene = GetScene();
-            PostProcessFeatureProcessor* fp = scene->GetFeatureProcessor<PostProcessFeatureProcessor>();
-            AZ::RPI::ViewPtr view = scene->GetDefaultRenderPipeline()->GetDefaultView();
-            if (fp)
-            {
-                PostProcessSettings* postProcessSettings = fp->GetLevelSettingsFromView(view);
-                if (postProcessSettings)
-                {
-                    ChromaticAbberationSettings* settings = postProcessSettings->GetChromaticAbberationSettings();
-                    if (settings)
-                    {
-                        if (settings->GetEnabled())
-                        {
-                            constants.m_strength = settings->GetStrength();
-                            //etc
-                        }
-                        else
-                        {
-                            constants.m_strength = 0.0f;
-                            //etc
-                        }
-                    }
-                }
-            }*/
 
             AZ_Assert(GetOutputCount() > 0, "FilmGrainPass: No output bindings!");
             RPI::PassAttachment* outputAttachment = GetOutputBinding(0).m_attachment.get();
