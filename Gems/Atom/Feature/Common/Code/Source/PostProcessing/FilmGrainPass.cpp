@@ -56,13 +56,32 @@ namespace AZ
             return (filmGrainSettings != nullptr) && filmGrainSettings->GetEnabled();
         }
 
+        void FilmGrainPass::LoadNoiseImage()
+        {
+            const constexpr char* DefaultNoisePath = "textures/default/default_iblglobalcm_ibldiffuse.dds.streamingimage";
+
+            Data::AssetId noiseAssetId;
+            Data::AssetCatalogRequestBus::BroadcastResult(
+                noiseAssetId, &Data::AssetCatalogRequestBus::Events::GetAssetIdByPath, DefaultNoisePath,
+                azrtti_typeid<AZ::RPI::StreamingImageAsset>(), false);
+            auto noiseAsset =
+                Data::AssetManager::Instance().GetAsset<RPI::StreamingImageAsset>(noiseAssetId, AZ::Data::AssetLoadBehavior::PreLoad);
+            noiseAsset.BlockUntilLoadComplete();
+
+            m_noiseImage = RPI::StreamingImage::FindOrCreate(noiseAsset);
+            AZ_Assert(m_noiseImage, "Failed to load noise");
+        }
+
         void FilmGrainPass::FrameBeginInternal(FramePrepareParams params)
         {
+            //m_shaderResourceGroup->SetImage(m_noiseIndex, m_noiseImage);
+
             // Must match the struct in .azsl
             struct Constants
             {
                 AZStd::array<u32, 2> m_outputSize;
                 float m_strength;
+                float m_luminanceDampening;
             } constants{};
 
             AZ_Assert(GetOutputCount() > 0, "FilmGrainPass: No output bindings!");
@@ -73,7 +92,8 @@ namespace AZ
 
             constants.m_outputSize[0] = size.m_width;
             constants.m_outputSize[1] = size.m_height;
-            constants.m_strength = 0.5f;
+            //constants.m_strength = ;
+            //constants.m_luminanceDampening = ;
 
             /*      
                     propertyIndex = material->FindPropertyIndex(AZ::Name("baseColor.textureMap"));

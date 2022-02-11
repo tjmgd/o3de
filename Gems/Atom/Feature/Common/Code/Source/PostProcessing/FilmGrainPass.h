@@ -32,7 +32,12 @@ namespace AZ
         private:
             FilmGrainPass(const RPI::PassDescriptor& descriptor);
 
-            AZ::RHI::ShaderInputNameIndex m_constantsIndex = "m_constants";
+            void LoadNoiseImage();
+
+            RHI::ShaderInputNameIndex m_noiseIndex = "m_noise";
+            RHI::ShaderInputNameIndex m_constantsIndex = "m_constants";
+
+            Data::Instance<RPI::Image> m_noiseImage;
         };
     } // namespace Render
 } // namespace AZ

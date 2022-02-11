@@ -12,12 +12,14 @@ ShaderResourceGroup PassSrg : SRG_PerPass
 {
     Texture2D<float4> m_inputColor;
     RWTexture2D<float4> m_outputColor;
+    Texture2D<float4> m_noise;
 
     // Must match the struct in .cpp
     struct Constants
     {
         uint2 m_outputSize; // texture size of output
         float m_strength; // strength of effect (0 to 1)
+        float m_luminanceDampening;
     };
     Constants m_constants;
 }
@@ -41,6 +43,7 @@ void MainCS(uint3 dispatchThreadID : SV_DispatchThreadID)
     //PassSrg::m_outputColor[dispatchThreadID.xy] = mad(grain * PassSrg::m_constants.m_strength, (lum - lum * lum) * 4, PassSrg::m_inputColor[dispatchThreadID.xy]);
     //float timetest = SceneSrg::m_time / 400.0;
     //PassSrg::m_outputColor[dispatchThreadID.xy] = float4(grain, grain, grain, 1.0);
+    
     PassSrg::m_outputColor[dispatchThreadID.xy] = float4(lum, lum, lum, 1.0);
 
 }
