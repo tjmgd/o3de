@@ -47,6 +47,8 @@ namespace AZ
             void SetViewAlias(const AZ::RPI::ViewPtr sourceView, const AZ::RPI::ViewPtr targetView);
             void RemoveViewAlias(const AZ::RPI::ViewPtr sourceView);
 
+            Data::Instance<RPI::Image> GetFilmGrain(); // temp
+
         private:
             PostProcessFeatureProcessor(const PostProcessFeatureProcessor&) = delete;
 
@@ -58,6 +60,9 @@ namespace AZ
             // Aggregates all level settings into a single level setting based their priorities and override settings
             void AggregateLevelSettings();
             void RemoveOutdatedViewSettings(const AZStd::vector_set<const RPI::View*>& activeViews);
+
+            // Load images to be used by FX
+            void LoadGrainImage();
 
             // Members...
 
@@ -89,6 +94,9 @@ namespace AZ
             AZStd::unordered_map<AZ::RPI::View*, PostProcessSettings> m_blendedPerViewSettings;
             // This is used for mimicking a postfx setting of a different view
             AZStd::unordered_map<AZ::RPI::View*, AZ::RPI::View*> m_viewAliasMap;
+
+            // PPFX Images
+            Data::Instance<RPI::Image> m_grainImage;
         };
     } // namespace Render
 } // namespace AZ

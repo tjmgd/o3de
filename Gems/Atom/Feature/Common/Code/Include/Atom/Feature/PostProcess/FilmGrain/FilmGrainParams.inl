@@ -12,8 +12,11 @@
 AZ_GFX_BOOL_PARAM(Enabled, m_enabled, false)
 AZ_GFX_ANY_PARAM_BOOL_OVERRIDE(bool, Enabled, m_enabled)
 
-// Soft knee value for smooth threshold falloff
+// Strength of effect
 AZ_GFX_FLOAT_PARAM(Strength, m_strength, FilmGrain::DefaultStrength)
 AZ_GFX_FLOAT_PARAM_FLOAT_OVERRIDE(float, Strength, m_strength)
+
+// Texture for grain
+AZ_GFX_TEXTURE2D_PARAM(Grain, m_grain, FilmGrain::DefaultGrain)
 
 

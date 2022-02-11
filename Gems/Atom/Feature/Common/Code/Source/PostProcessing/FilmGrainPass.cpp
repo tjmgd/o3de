@@ -56,25 +56,50 @@ namespace AZ
             return (filmGrainSettings != nullptr) && filmGrainSettings->GetEnabled();
         }
 
-        void FilmGrainPass::LoadNoiseImage()
+        /* void FilmGrainPass::UpdateParameters()
         {
-            const constexpr char* DefaultNoisePath = "textures/default/default_iblglobalcm_ibldiffuse.dds.streamingimage";
+            auto UpdateIfChanged = [](float& local, float input) -> bool
+            {
+                if (local != input)
+                {
+                    local = input;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            };
 
-            Data::AssetId noiseAssetId;
-            Data::AssetCatalogRequestBus::BroadcastResult(
-                noiseAssetId, &Data::AssetCatalogRequestBus::Events::GetAssetIdByPath, DefaultNoisePath,
-                azrtti_typeid<AZ::RPI::StreamingImageAsset>(), false);
-            auto noiseAsset =
-                Data::AssetManager::Instance().GetAsset<RPI::StreamingImageAsset>(noiseAssetId, AZ::Data::AssetLoadBehavior::PreLoad);
-            noiseAsset.BlockUntilLoadComplete();
+            RPI::Scene* scene = GetScene();
+            PostProcessFeatureProcessor* fp = scene->GetFeatureProcessor<PostProcessFeatureProcessor>();
+            RPI::ViewPtr view = scene->GetDefaultRenderPipeline()->GetDefaultView();
+            if (fp)
+            {
+                PostProcessSettings* postProcessSettings = fp->GetLevelSettingsFromView(view);
+                if (postProcessSettings)
+                {
+                    FilmGrainSettings* filmGrainSettings = postProcessSettings->GetFilmGrainSettings();
+                    if (filmGrainSettings)
+                    {
+                        m_paramsUpdated |= UpdateIfChanged(m_grain, filmGrainSettings->GetGrain());
+                    }
+                }
+            }
+        }*/
 
-            m_noiseImage = RPI::StreamingImage::FindOrCreate(noiseAsset);
-            AZ_Assert(m_noiseImage, "Failed to load noise");
+        Data::Instance<RPI::Image> FilmGrainPass::GetFilmGrainImage() // temp
+        {
+            RPI::Scene* scene = GetScene();
+            PostProcessFeatureProcessor* fp = scene->GetFeatureProcessor<PostProcessFeatureProcessor>();
+            RPI::ViewPtr view = scene->GetDefaultRenderPipeline()->GetDefaultView();
+            fp->GetFilmGrain();
         }
 
         void FilmGrainPass::FrameBeginInternal(FramePrepareParams params)
         {
-            //m_shaderResourceGroup->SetImage(m_noiseIndex, m_noiseImage);
+            Data::Instance<RPI::Image> grainImage = GetFilmGrainImage();
+            m_shaderResourceGroup->SetImage(m_grainIndex, grainImage);
 
             // Must match the struct in .azsl
             struct Constants
@@ -94,19 +119,6 @@ namespace AZ
             constants.m_outputSize[1] = size.m_height;
             //constants.m_strength = ;
             //constants.m_luminanceDampening = ;
-
-            /*      
-                    propertyIndex = material->FindPropertyIndex(AZ::Name("baseColor.textureMap"));
-                    if (propertyIndex.IsValid())
-                    {
-                        Data::Instance<RPI::Image> image = material->GetPropertyValue<Data::Instance<RPI::Image>>(propertyIndex);
-                        if (image.get())
-                        {
-                            subMesh.m_textureFlags |= RayTracingSubMeshTextureFlags::BaseColor;
-                            subMesh.m_baseColorImageView = image->GetImageView();
-                        }
-                    }
-            */
 
             m_shaderResourceGroup->SetConstant(m_constantsIndex, constants);
 

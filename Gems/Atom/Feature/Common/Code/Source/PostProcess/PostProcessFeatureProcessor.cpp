@@ -69,6 +69,10 @@ namespace AZ
             {
                 SortPostProcessSettings();
                 AggregateLevelSettings();
+                // TODO: this Load needs to be inside another flag check (runtime changes to any ppfx will cause reloading)
+                // This might require a change to the current flag setting flow
+                // Long term this function will be changed to allow for multiple presets and even user defined textures
+                LoadNoiseImage();
                 m_settingsChanged = false;
             }
 
@@ -222,6 +226,27 @@ namespace AZ
             return settingsIterator != m_blendedPerViewSettings.end()
                 ? &settingsIterator->second
                 : m_globalAggregateLevelSettings.get();
+        }
+
+        void PostProcessFeatureProcessor::LoadGrainImage()
+        {
+            const constexpr char* DefaultGrainPath = "textures/default/default_film_grain.png.streamingimage";
+
+            Data::AssetId grainAssetId;
+            Data::AssetCatalogRequestBus::BroadcastResult(
+                grainAssetId, &Data::AssetCatalogRequestBus::Events::GetAssetIdByPath, DefaultGrainPath,
+                azrtti_typeid<AZ::RPI::StreamingImageAsset>(), false);
+            auto grainAsset = Data::AssetManager::Instance().GetAsset<RPI::StreamingImageAsset>(
+                grainAssetId, AZ::Data::AssetLoadBehavior::PreLoad);
+            grainAsset.BlockUntilLoadComplete();
+
+            m_grainImage = RPI::StreamingImage::FindOrCreate(grainAsset);
+            AZ_Assert(m_grainImage, "Failed to load noise");
+        }
+
+        Data::Instance<RPI::Image> PostProcessFeatureProcessor::GetFilmGrain() // temp
+        {
+            return m_grainImage;
         }
     } // namespace Render
 } // namespace AZ
