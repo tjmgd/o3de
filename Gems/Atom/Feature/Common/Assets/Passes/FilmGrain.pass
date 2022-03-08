@@ -4,8 +4,8 @@
     "ClassName": "PassAsset",
     "ClassData": {
         "PassTemplate": {
-            "Name": "ChromaticAberrationTemplate",
-            "PassClass": "ChromaticAberrationPass",
+            "Name": "FilmGrainTemplate",
+            "PassClass": "FilmGrainPass",
             "Slots": [
                 {
                     "Name": "Input",
@@ -23,7 +23,7 @@
             ],
             "ImageAttachments": [
                 {
-                    "Name": "ChromaticAberration",
+                    "Name": "FilmGrain",
                     "SizeSource": {
                         "Source": {
                             "Pass": "This",
@@ -41,7 +41,7 @@
                     "LocalSlot": "Output",
                     "AttachmentRef": {
                         "Pass": "This",
-                        "Attachment": "ChromaticAberration"
+                        "Attachment": "FilmGrain"
                     }
                 }
             ],
@@ -54,7 +54,7 @@
             "PassData": {
                 "$type": "ComputePassData",
                 "ShaderAsset": {
-                    "FilePath": "Shaders/PostProcessing/ChromaticAberration.shader"
+                    "FilePath": "Shaders/PostProcessing/FilmGrain.shader"
                 },
                 "Make Fullscreen Pass": true
             }

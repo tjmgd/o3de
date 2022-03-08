@@ -6,7 +6,7 @@
  *
  */
 
-#include <PostProcess/ChromaticAberration/ChromaticAberrationComponentController.h>
+#include <PostProcess/FilmGrain/FilmGrainComponentController.h>
 
 #include <AzCore/RTTI/BehaviorContext.h>
 
@@ -16,25 +16,25 @@ namespace AZ
 {
     namespace Render
     {
-        void ChromaticAberrationComponentController::Reflect(ReflectContext* context)
+        void FilmGrainComponentController::Reflect(ReflectContext* context)
         {
-            ChromaticAberrationComponentConfig::Reflect(context);
+            FilmGrainComponentConfig::Reflect(context);
 
             if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
             {
-                serializeContext->Class<ChromaticAberrationComponentController>()->Version(0)->Field(
-                    "Configuration", &ChromaticAberrationComponentController::m_configuration);
+                serializeContext->Class<FilmGrainComponentController>()->Version(0)->Field(
+                    "Configuration", &FilmGrainComponentController::m_configuration);
             }
 
             if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))
             {
-                behaviorContext->EBus<ChromaticAberrationRequestBus>("ChromaticAberrationRequestBus")
+                behaviorContext->EBus<FilmGrainRequestBus>("FilmGrainRequestBus")
                     ->Attribute(AZ::Script::Attributes::Module, "render")
                     ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
                 // Auto-gen behavior context...
-#define PARAM_EVENT_BUS ChromaticAberrationRequestBus::Events
+#define PARAM_EVENT_BUS FilmGrainRequestBus::Events
 #include <Atom/Feature/ParamMacros/StartParamBehaviorContext.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 #undef PARAM_EVENT_BUS
 
@@ -42,27 +42,27 @@ namespace AZ
             }
         }
 
-        void ChromaticAberrationComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+        void FilmGrainComponentController::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
         {
-            provided.push_back(AZ_CRC_CE("ChromaticAberrationService"));
+            provided.push_back(AZ_CRC_CE("FilmGrainService"));
         }
 
-        void ChromaticAberrationComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
+        void FilmGrainComponentController::GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible)
         {
-            incompatible.push_back(AZ_CRC_CE("ChromaticAberrationService"));
+            incompatible.push_back(AZ_CRC_CE("FilmGrainService"));
         }
 
-        void ChromaticAberrationComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
+        void FilmGrainComponentController::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
         {
             required.push_back(AZ_CRC_CE("PostFXLayerService"));
         }
 
-        ChromaticAberrationComponentController::ChromaticAberrationComponentController(const ChromaticAberrationComponentConfig& config)
+        FilmGrainComponentController::FilmGrainComponentController(const FilmGrainComponentConfig& config)
             : m_configuration(config)
         {
         }
 
-        void ChromaticAberrationComponentController::Activate(EntityId entityId)
+        void FilmGrainComponentController::Activate(EntityId entityId)
         {
             m_entityId = entityId;
 
@@ -73,20 +73,20 @@ namespace AZ
                 m_postProcessInterface = fp->GetOrCreateSettingsInterface(m_entityId);
                 if (m_postProcessInterface)
                 {
-                    m_settingsInterface = m_postProcessInterface->GetOrCreateChromaticAberrationSettingsInterface();
+                    m_settingsInterface = m_postProcessInterface->GetOrCreateFilmGrainSettingsInterface();
                     OnConfigChanged();
                 }
             }
-            ChromaticAberrationRequestBus::Handler::BusConnect(m_entityId);
+            FilmGrainRequestBus::Handler::BusConnect(m_entityId);
         }
 
-        void ChromaticAberrationComponentController::Deactivate()
+        void FilmGrainComponentController::Deactivate()
         {
-            ChromaticAberrationRequestBus::Handler::BusDisconnect(m_entityId);
+            FilmGrainRequestBus::Handler::BusDisconnect(m_entityId);
 
             if (m_postProcessInterface)
             {
-                m_postProcessInterface->RemoveChromaticAberrationSettingsInterface();
+                m_postProcessInterface->RemoveFilmGrainSettingsInterface();
             }
 
             m_postProcessInterface = nullptr;
@@ -96,18 +96,18 @@ namespace AZ
 
         // Getters & Setters...
 
-        void ChromaticAberrationComponentController::SetConfiguration(const ChromaticAberrationComponentConfig& config)
+        void FilmGrainComponentController::SetConfiguration(const FilmGrainComponentConfig& config)
         {
             m_configuration = config;
             OnConfigChanged();
         }
 
-        const ChromaticAberrationComponentConfig& ChromaticAberrationComponentController::GetConfiguration() const
+        const FilmGrainComponentConfig& FilmGrainComponentController::GetConfiguration() const
         {
             return m_configuration;
         }
 
-        void ChromaticAberrationComponentController::OnConfigChanged()
+        void FilmGrainComponentController::OnConfigChanged()
         {
             if (m_settingsInterface)
             {
@@ -121,11 +121,11 @@ namespace AZ
         // from the settings class to set the local configuration. This is in case the settings class
         // applies some custom logic that results in the set value being different from the input
 #define AZ_GFX_COMMON_PARAM(ValueType, Name, MemberName, DefaultValue)                                                                     \
-    ValueType ChromaticAberrationComponentController::Get##Name() const                                                                              \
+    ValueType FilmGrainComponentController::Get##Name() const                                                                              \
     {                                                                                                                                      \
         return m_configuration.MemberName;                                                                                                 \
     }                                                                                                                                      \
-    void ChromaticAberrationComponentController::Set##Name(ValueType val)                                                                            \
+    void FilmGrainComponentController::Set##Name(ValueType val)                                                                            \
     {                                                                                                                                      \
         if (m_settingsInterface)                                                                                                           \
         {                                                                                                                                  \
@@ -140,11 +140,11 @@ namespace AZ
     }
 
 #define AZ_GFX_COMMON_OVERRIDE(ValueType, Name, MemberName, OverrideValueType)                                                             \
-    OverrideValueType ChromaticAberrationComponentController::Get##Name##Override() const                                                            \
+    OverrideValueType FilmGrainComponentController::Get##Name##Override() const                                                            \
     {                                                                                                                                      \
         return m_configuration.MemberName##Override;                                                                                       \
     }                                                                                                                                      \
-    void ChromaticAberrationComponentController::Set##Name##Override(OverrideValueType val)                                                          \
+    void FilmGrainComponentController::Set##Name##Override(OverrideValueType val)                                                          \
     {                                                                                                                                      \
         m_configuration.MemberName##Override = val;                                                                                        \
         if (m_settingsInterface)                                                                                                           \
@@ -155,7 +155,7 @@ namespace AZ
     }
 
 #include <Atom/Feature/ParamMacros/MapAllCommon.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
     } // namespace Render
 } // namespace AZ

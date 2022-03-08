@@ -8,30 +8,30 @@
 
 #pragma once
 
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationConstants.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
 #include <AzCore/Component/Component.h>
 
 namespace AZ
 {
     namespace Render
     {
-        class ChromaticAberrationRequests : public ComponentBus
+        class FilmGrainRequests : public ComponentBus
         {
         public:
-            AZ_RTTI(AZ::Render::ChromaticAberrationRequests, "{400844DF-0B44-4941-AECD-135D94909E16}");
+            AZ_RTTI(AZ::Render::FilmGrainRequests, "{8072BEF6-22A2-45F0-A887-0CB840B6EE45}");
 
             /// Overrides the default AZ::EBusTraits handler policy to allow one listener only.
             static const EBusHandlerPolicy HandlerPolicy = EBusHandlerPolicy::Single;
-            virtual ~ChromaticAberrationRequests()
+            virtual ~FilmGrainRequests()
             {
             }
 
             // Auto-gen virtual getters/setters...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsVirtual.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
         };
 
-        typedef AZ::EBus<ChromaticAberrationRequests> ChromaticAberrationRequestBus;
+        typedef AZ::EBus<FilmGrainRequests> FilmGrainRequestBus;
     } // namespace Render
 } // namespace AZ

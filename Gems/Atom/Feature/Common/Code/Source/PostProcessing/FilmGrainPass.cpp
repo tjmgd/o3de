@@ -6,7 +6,7 @@
  *
  */
 
-#include <PostProcessing/ChromaticAberrationPass.h>
+#include <PostProcessing/FilmGrainPass.h>
 #include <PostProcess/PostProcessFeatureProcessor.h>
 #include <Atom/RPI.Public/RenderPipeline.h>
 #include <Atom/RPI.Public/Scene.h>
@@ -15,18 +15,18 @@ namespace AZ
 {
     namespace Render
     {
-        RPI::Ptr<ChromaticAberrationPass> ChromaticAberrationPass::Create(const RPI::PassDescriptor& descriptor)
+        RPI::Ptr<FilmGrainPass> FilmGrainPass::Create(const RPI::PassDescriptor& descriptor)
         {
-            RPI::Ptr<ChromaticAberrationPass> pass = aznew ChromaticAberrationPass(descriptor);
+            RPI::Ptr<FilmGrainPass> pass = aznew FilmGrainPass(descriptor);
             return AZStd::move(pass);
         }
 
-        ChromaticAberrationPass::ChromaticAberrationPass(const RPI::PassDescriptor& descriptor)
+        FilmGrainPass::FilmGrainPass(const RPI::PassDescriptor& descriptor)
             : RPI::ComputePass(descriptor)
         {
         }
 
-        bool ChromaticAberrationPass::IsEnabled() const
+        bool FilmGrainPass::IsEnabled() const
         {
             if (!ComputePass::IsEnabled())
             {
@@ -48,23 +48,23 @@ namespace AZ
             {
                 return false;
             }
-            const ChromaticAberrationSettings* chromaticAberrationSettings = postProcessSettings->GetChromaticAberrationSettings();
-            if (!chromaticAberrationSettings)
+            const FilmGrainSettings* FilmGrainSettings = postProcessSettings->GetFilmGrainSettings();
+            if (!FilmGrainSettings)
             {
                 return false;
             }
-            return chromaticAberrationSettings->GetEnabled();
+            return FilmGrainSettings->GetEnabled();
         }
 
-        void ChromaticAberrationPass::FrameBeginInternal(FramePrepareParams params)
+        void FilmGrainPass::FrameBeginInternal(FramePrepareParams params)
         {
-            // Must match the struct in ChromaticAberration.azsl
+            // Must match the struct in FilmGrain.azsl
             struct Constants
             {
                 AZStd::array<u32, 2> m_outputSize;
                 AZStd::array<float, 2> m_outputCenter;
-                float m_strength = ChromaticAberration::DefaultStrength;
-                float m_blend = ChromaticAberration::DefaultBlend;
+                float m_strength = FilmGrain::DefaultStrength;
+                float m_blend = FilmGrain::DefaultBlend;
             } constants{};
 
             RPI::Scene* scene = GetScene();
@@ -75,19 +75,25 @@ namespace AZ
                 PostProcessSettings* postProcessSettings = fp->GetLevelSettingsFromView(view);
                 if (postProcessSettings)
                 {
-                    ChromaticAberrationSettings* chromaticAberrationSettings = postProcessSettings->GetChromaticAberrationSettings();
-                    if (chromaticAberrationSettings)
+                    FilmGrainSettings* FilmGrainSettings = postProcessSettings->GetFilmGrainSettings();
+                    if (FilmGrainSettings)
                     {
-                        constants.m_strength = chromaticAberrationSettings->GetStrength();
-                        constants.m_blend = chromaticAberrationSettings->GetBlend();
+                        constants.m_strength = FilmGrainSettings->GetStrength();
+                        constants.m_blend = FilmGrainSettings->GetBlend();
+
+                        const char* filmGrainPath = 
+                        if ()
+                        {
+
+                        }
                     }
                 }
             }
 
-            AZ_Assert(GetOutputCount() > 0, "ChromaticAberrationPass: No output bindings!");
-            RPI::PassAttachment* outputAttachment = GetOutputBinding(0).m_attachment.get();
+            AZ_Assert(GetOutputCount() > 0, "FilmGrainPass: No output bindings!");
+            RPI::PassAttachment* outputAttachment = GetOutputBinding(0).GetAttachment().get();
 
-            AZ_Assert(outputAttachment != nullptr, "ChromaticAberrationPass: Output binding has no attachment!");
+            AZ_Assert(outputAttachment != nullptr, "FilmGrainPass: Output binding has no attachment!");
             RHI::Size size = outputAttachment->m_descriptor.m_image.m_size;
 
             constants.m_outputSize[0] = size.m_width;

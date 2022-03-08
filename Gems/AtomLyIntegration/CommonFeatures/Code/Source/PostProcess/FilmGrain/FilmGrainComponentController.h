@@ -8,13 +8,13 @@
 
 #pragma once
 
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationConstants.h>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationSettingsInterface.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h>
 #include <Atom/Feature/PostProcess/PostProcessFeatureProcessorInterface.h>
 #include <Atom/Feature/PostProcess/PostProcessSettingsInterface.h>
 
-#include <AtomLyIntegration/CommonFeatures/PostProcess/ChromaticAberration/ChromaticAberrationBus.h>
-#include <AtomLyIntegration/CommonFeatures/PostProcess/ChromaticAberration/ChromaticAberrationComponentConfig.h>
+#include <AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainBus.h>
+#include <AtomLyIntegration/CommonFeatures/PostProcess/FilmGrain/FilmGrainComponentConfig.h>
 
 #include <AzCore/Component/Component.h>
 #include <AzCore/Component/TransformBus.h>
@@ -24,38 +24,38 @@ namespace AZ
 {
     namespace Render
     {
-        class ChromaticAberrationComponentController final : public ChromaticAberrationRequestBus::Handler
+        class FilmGrainComponentController final : public FilmGrainRequestBus::Handler
         {
         public:
-            friend class EditorChromaticAberrationComponent;
+            friend class EditorFilmGrainComponent;
 
-            AZ_TYPE_INFO(AZ::Render::ChromaticAberrationComponentController, "{776770B4-03BA-491D-BE5B-CBF3948BF078}");
+            AZ_TYPE_INFO(AZ::Render::FilmGrainComponentController, "{732714F9-7CEF-4874-8614-0F5F50BBC6C1}");
             static void Reflect(AZ::ReflectContext* context);
             static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
             static void GetIncompatibleServices(AZ::ComponentDescriptor::DependencyArrayType& incompatible);
             static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
 
-            ChromaticAberrationComponentController() = default;
-            ChromaticAberrationComponentController(const ChromaticAberrationComponentConfig& config);
+            FilmGrainComponentController() = default;
+            FilmGrainComponentController(const FilmGrainComponentConfig& config);
 
             void Activate(EntityId entityId);
             void Deactivate();
-            void SetConfiguration(const ChromaticAberrationComponentConfig& config);
-            const ChromaticAberrationComponentConfig& GetConfiguration() const;
+            void SetConfiguration(const FilmGrainComponentConfig& config);
+            const FilmGrainComponentConfig& GetConfiguration() const;
 
             // Auto-gen function override declarations (functions definitions in .cpp)...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsOverride.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
         private:
-            AZ_DISABLE_COPY(ChromaticAberrationComponentController);
+            AZ_DISABLE_COPY(FilmGrainComponentController);
 
             void OnConfigChanged();
 
             PostProcessSettingsInterface* m_postProcessInterface = nullptr;
-            ChromaticAberrationSettingsInterface* m_settingsInterface = nullptr;
-            ChromaticAberrationComponentConfig m_configuration;
+            FilmGrainSettingsInterface* m_settingsInterface = nullptr;
+            FilmGrainComponentConfig m_configuration;
             EntityId m_entityId;
         };
     } // namespace Render

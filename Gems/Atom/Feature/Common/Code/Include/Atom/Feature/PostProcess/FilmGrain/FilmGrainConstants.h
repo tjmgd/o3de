@@ -12,10 +12,10 @@ namespace AZ
 {
     namespace Render
     {
-        namespace ChromaticAberration
+        namespace FilmGrain
         {
             static constexpr float DefaultStrength = 0.01f;
             static constexpr float DefaultBlend = 0.5f;
-        } // namespace ChromaticAberration
+        } // namespace FilmGrain
     } // namespace Render
 } // namespace AZ

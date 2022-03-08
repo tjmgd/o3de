@@ -12,7 +12,7 @@
 
 #include <Atom/RHI.Reflect/ShaderResourceGroupLayoutDescriptor.h>
 
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationSettingsInterface.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h>
 #include <Atom/RPI.Public/Image/StreamingImage.h>
 #include <PostProcess/PostProcessBase.h>
 
@@ -24,8 +24,8 @@ namespace AZ
     {
         class PostProcessSettings;
 
-        class ChromaticAberrationSettings final
-            : public ChromaticAberrationSettingsInterface
+        class FilmGrainSettings final
+            : public FilmGrainSettingsInterface
             , public PostProcessBase
         {
             friend class PostProcessSettings;
@@ -33,30 +33,32 @@ namespace AZ
 
         public:
             AZ_RTTI(
-                AZ::Render::ChromaticAberrationSettings,
-                "{A0AF24C8-EDC2-48A2-B256-95E26A53C0E6}",
-                AZ::Render::ChromaticAberrationSettingsInterface,
+                AZ::Render::FilmGrainSettings,
+                "{E75BF1A1-2607-4743-A755-8CE2D59E291E}",
+                AZ::Render::FilmGrainSettingsInterface,
                 AZ::Render::PostProcessBase);
-            AZ_CLASS_ALLOCATOR(ChromaticAberrationSettings, SystemAllocator, 0);
+            AZ_CLASS_ALLOCATOR(FilmGrainSettings, SystemAllocator, 0);
 
-            ChromaticAberrationSettings(PostProcessFeatureProcessor* featureProcessor);
-            ~ChromaticAberrationSettings() = default;
+            FilmGrainSettings(PostProcessFeatureProcessor* featureProcessor);
+            ~FilmGrainSettings() = default;
 
             // BloomSettingsInterface overrides...
             void OnConfigChanged() override;
 
             // Applies settings from this onto target using override settings and passed alpha value for blending
-            void ApplySettingsTo(ChromaticAberrationSettings* target, float alpha) const;
+            void ApplySettingsTo(FilmGrainSettings* target, float alpha) const;
+
+            Data::Instance<RPI::StreamingImage> LoadStreamingImage(const char* textureFilePath, const char* sampleName);
 
             // Generate getters and setters.
 #include <Atom/Feature/ParamMacros/StartParamFunctionsOverrideImpl.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
         private:
             // Generate members...
 #include <Atom/Feature/ParamMacros/StartParamMembers.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
 

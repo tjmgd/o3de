@@ -8,32 +8,32 @@
 
 #pragma once
 
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationSettingsInterface.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h>
 #include <AzCore/Component/Component.h>
 
 namespace AZ
 {
     namespace Render
     {
-        class ChromaticAberrationComponentConfig final : public ComponentConfig
+        class FilmGrainComponentConfig final : public ComponentConfig
         {
         public:
-            AZ_RTTI(AZ::Render::ChromaticAberrationComponentConfig, "{D0E889C8-C0B0-4B88-8672-91A1A2D21EFF}", AZ::ComponentConfig);
+            AZ_RTTI(AZ::Render::FilmGrainComponentConfig, "{1BE23078-EBC5-4872-B3AB-30AB42BC6C58}", AZ::ComponentConfig);
 
             static void Reflect(ReflectContext* context);
 
             // Generate members...
 #include <Atom/Feature/ParamMacros/StartParamMembers.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
             // Generate Getters/Setters...
 #include <Atom/Feature/ParamMacros/StartParamFunctions.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
-            void CopySettingsFrom(ChromaticAberrationSettingsInterface* settings);
-            void CopySettingsTo(ChromaticAberrationSettingsInterface* settings);
+            void CopySettingsFrom(FilmGrainSettingsInterface* settings);
+            void CopySettingsTo(FilmGrainSettingsInterface* settings);
 
             bool ArePropertiesReadOnly() const
             {

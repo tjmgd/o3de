@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationConstants.h>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h>
 #include <AzCore/Component/EntityId.h>
 #include <AzCore/RTTI/RTTI.h>
 
@@ -16,14 +16,14 @@ namespace AZ
 {
     namespace Render
     {
-        class ChromaticAberrationSettingsInterface
+        class FilmGrainSettingsInterface
         {
         public:
-            AZ_RTTI(AZ::Render::ChromaticAberrationSettingsInterface, "{725CC98B-AE22-4DE5-B68B-5D61A3270264}");
+            AZ_RTTI(AZ::Render::FilmGrainSettingsInterface, "{47FDB29D-7448-4FC2-9E7D-AFAD7FD52EE4}");
 
             // Auto-gen virtual getter and setter functions...
 #include <Atom/Feature/ParamMacros/StartParamFunctionsVirtual.inl>
-#include <Atom/Feature/PostProcess/ChromaticAberration/ChromaticAberrationParams.inl>
+#include <Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl>
 #include <Atom/Feature/ParamMacros/EndParams.inl>
 
             virtual void OnConfigChanged() = 0;
