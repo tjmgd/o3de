@@ -16,6 +16,7 @@ namespace AZ
         {
             static constexpr float DefaultStrength = 0.01f;
             static constexpr float DefaultBlend = 0.5f;
+
         } // namespace FilmGrain
     } // namespace Render
 } // namespace AZ

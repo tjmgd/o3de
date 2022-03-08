@@ -19,3 +19,6 @@ AZ_GFX_FLOAT_PARAM_FLOAT_OVERRIDE(float, Strength, m_strength)
 // Blending
 AZ_GFX_FLOAT_PARAM(Blend, m_blend, FilmGrain::DefaultBlend)
 AZ_GFX_FLOAT_PARAM_FLOAT_OVERRIDE(float, Blend, m_blend)
+
+// Grain Source
+AZ_GFX_TEXTURE2D_PARAM(GrainPath, m_grainPath, FilmGrain::DefaultGrainPath)

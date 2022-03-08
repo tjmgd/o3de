@@ -48,12 +48,12 @@ namespace AZ
             {
                 return false;
             }
-            const FilmGrainSettings* FilmGrainSettings = postProcessSettings->GetFilmGrainSettings();
-            if (!FilmGrainSettings)
+            const FilmGrainSettings* filmGrainSettings = postProcessSettings->GetFilmGrainSettings();
+            if (!filmGrainSettings)
             {
                 return false;
             }
-            return FilmGrainSettings->GetEnabled();
+            return filmGrainSettings->GetEnabled();
         }
 
         void FilmGrainPass::FrameBeginInternal(FramePrepareParams params)
@@ -75,20 +75,23 @@ namespace AZ
                 PostProcessSettings* postProcessSettings = fp->GetLevelSettingsFromView(view);
                 if (postProcessSettings)
                 {
-                    FilmGrainSettings* FilmGrainSettings = postProcessSettings->GetFilmGrainSettings();
-                    if (FilmGrainSettings)
+                    FilmGrainSettings* filmGrainSettings = postProcessSettings->GetFilmGrainSettings();
+                    if (filmGrainSettings)
                     {
-                        constants.m_strength = FilmGrainSettings->GetStrength();
-                        constants.m_blend = FilmGrainSettings->GetBlend();
+                        constants.m_strength = filmGrainSettings->GetStrength();
+                        constants.m_blend = filmGrainSettings->GetBlend();
 
-                        const char* filmGrainPath = 
-                        if ()
+                        const char* settingsGrainPath = filmGrainSettings->GetGrainPath().c_str();
+                        if (m_grainPath != settingsGrainPath)
                         {
-
+                            m_grainPath = settingsGrainPath;
+                            m_grainImage = filmGrainSettings->LoadStreamingImage(settingsGrainPath, "FilmGrain");
                         }
                     }
                 }
             }
+
+            m_shaderResourceGroup->SetImage(m_grainIndex, m_grainImage);
 
             AZ_Assert(GetOutputCount() > 0, "FilmGrainPass: No output bindings!");
             RPI::PassAttachment* outputAttachment = GetOutputBinding(0).GetAttachment().get();
