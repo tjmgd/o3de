@@ -33,6 +33,12 @@ namespace AZ
         private:
             FilmGrainPass(const RPI::PassDescriptor& descriptor);
 
+
+            Data::Instance<RPI::Image> m_grainImage;
+
+            AZStd::string m_currentGrainPath = "";
+
+            RHI::ShaderInputNameIndex m_grainIndex = "m_grain";
             AZ::RHI::ShaderInputNameIndex m_constantsIndex = "m_constants";
         };
     } // namespace Render

@@ -62,9 +62,9 @@ namespace AZ
             struct Constants
             {
                 AZStd::array<u32, 2> m_outputSize;
-                AZStd::array<float, 2> m_outputCenter;
-                float m_strength = FilmGrain::DefaultStrength;
-                float m_blend = FilmGrain::DefaultBlend;
+                float m_intensity = FilmGrain::DefaultIntensity;
+                float m_luminanceDampening = FilmGrain::DefaultLuminanceDampening;
+                float m_tilingScale = FilmGrain::DefaultTilingScale;
             } constants{};
 
             RPI::Scene* scene = GetScene();
@@ -78,14 +78,15 @@ namespace AZ
                     FilmGrainSettings* filmGrainSettings = postProcessSettings->GetFilmGrainSettings();
                     if (filmGrainSettings)
                     {
-                        constants.m_strength = filmGrainSettings->GetStrength();
-                        constants.m_blend = filmGrainSettings->GetBlend();
+                        constants.m_intensity = filmGrainSettings->GetIntensity();
+                        constants.m_luminanceDampening = filmGrainSettings->GetLuminanceDampening();
+                        constants.m_tilingScale = filmGrainSettings->GetTilingScale();
 
-                        const char* settingsGrainPath = filmGrainSettings->GetGrainPath().c_str();
-                        if (m_grainPath != settingsGrainPath)
+                        AZStd::string settingsGrainPath = filmGrainSettings->GetGrainPath();
+                        if (m_currentGrainPath != settingsGrainPath)
                         {
-                            m_grainPath = settingsGrainPath;
-                            m_grainImage = filmGrainSettings->LoadStreamingImage(settingsGrainPath, "FilmGrain");
+                            m_currentGrainPath = settingsGrainPath;
+                            m_grainImage = filmGrainSettings->LoadStreamingImage(settingsGrainPath.c_str(), "FilmGrain");
                         }
                     }
                 }
@@ -101,8 +102,6 @@ namespace AZ
 
             constants.m_outputSize[0] = size.m_width;
             constants.m_outputSize[1] = size.m_height;
-            constants.m_outputCenter[0] = (size.m_width - 1) * 0.5f;
-            constants.m_outputCenter[1] = (size.m_height -1) * 0.5f;
 
             m_shaderResourceGroup->SetConstant(m_constantsIndex, constants);
 

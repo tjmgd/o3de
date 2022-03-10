@@ -22,8 +22,9 @@ namespace AZ
 
             if (auto* serializeContext = azrtti_cast<SerializeContext*>(context))
             {
-                serializeContext->Class<FilmGrainComponentController>()->Version(0)->Field(
-                    "Configuration", &FilmGrainComponentController::m_configuration);
+                serializeContext->Class<FilmGrainComponentController>()
+                    ->Version(0)
+                    ->Field("Configuration", &FilmGrainComponentController::m_configuration);
             }
 
             if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context))

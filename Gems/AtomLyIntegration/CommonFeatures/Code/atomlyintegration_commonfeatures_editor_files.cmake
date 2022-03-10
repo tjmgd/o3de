@@ -60,7 +60,7 @@ set(FILES
     Source/PostProcess/EditorPostFxLayerComponent.h
     Source/PostProcess/Bloom/EditorBloomComponent.cpp
     Source/PostProcess/Bloom/EditorBloomComponent.h
-	Source/PostProcess/FilmGrain/EditorFilmGrainComponent.cpp
+    Source/PostProcess/FilmGrain/EditorFilmGrainComponent.cpp
     Source/PostProcess/FilmGrain/EditorFilmGrainComponent.h
     Source/PostProcess/ColorGrading/EditorHDRColorGradingComponent.cpp
     Source/PostProcess/ColorGrading/EditorHDRColorGradingComponent.h

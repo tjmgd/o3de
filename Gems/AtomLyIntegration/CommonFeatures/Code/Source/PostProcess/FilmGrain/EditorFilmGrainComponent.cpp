@@ -49,16 +49,24 @@ namespace AZ
                             Edit::UIHandlers::CheckBox, &FilmGrainComponentConfig::m_enabled, "Enable Film Grain", "Enable Film Grain.")
                         ->Attribute(Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
 
-                        ->DataElement(AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_strength, "Strength", "Strength of effect")
+                        ->DataElement(AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_intensity, "Intensity", "Intensity of effect")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
                         ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
                         ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
                         ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
 
                         ->DataElement(
-                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_blend, "Blend", "Factor for additive blending with original image")
+                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_luminanceDampening, "Luminance Dampening", "Factor for dampening effect in areas of both high and low luminance")
                         ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
                         ->Attribute(AZ::Edit::Attributes::Max, 1.0f)
+                        ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
+                        ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
+
+                        ->DataElement(
+                            AZ::Edit::UIHandlers::Slider, &FilmGrainComponentConfig::m_tilingScale, "Tiling Scale",
+                            "Factor for tiling the pregenerated noise")
+                        ->Attribute(AZ::Edit::Attributes::Min, 0.0f)
+                        ->Attribute(AZ::Edit::Attributes::Max, 20.0f)
                         ->Attribute(AZ::Edit::Attributes::ChangeNotify, Edit::PropertyRefreshLevels::ValuesOnly)
                         ->Attribute(Edit::Attributes::ReadOnly, &FilmGrainComponentConfig::ArePropertiesReadOnly)
 

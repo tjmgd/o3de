@@ -83,7 +83,7 @@ set(FILES
     Source/PostProcess/Bloom/BloomComponentConfig.cpp
     Source/PostProcess/Bloom/BloomComponentController.cpp
     Source/PostProcess/Bloom/BloomComponentController.h
-	Source/PostProcess/FilmGrain/FilmGrainComponent.cpp
+    Source/PostProcess/FilmGrain/FilmGrainComponent.cpp
     Source/PostProcess/FilmGrain/FilmGrainComponent.h
     Source/PostProcess/FilmGrain/FilmGrainComponentConfig.cpp
     Source/PostProcess/FilmGrain/FilmGrainComponentController.cpp
