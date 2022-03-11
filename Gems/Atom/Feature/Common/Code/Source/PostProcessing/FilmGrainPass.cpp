@@ -62,6 +62,7 @@ namespace AZ
             struct Constants
             {
                 AZStd::array<u32, 2> m_outputSize;
+                AZStd::array<u32, 2> m_grainTextureSize;
                 float m_intensity = FilmGrain::DefaultIntensity;
                 float m_luminanceDampening = FilmGrain::DefaultLuminanceDampening;
                 float m_tilingScale = FilmGrain::DefaultTilingScale;
@@ -94,6 +95,11 @@ namespace AZ
 
             m_shaderResourceGroup->SetImage(m_grainIndex, m_grainImage);
 
+            RHI::Size grainTextureSize = m_grainImage->GetDescriptor().m_size;
+
+            constants.m_grainTextureSize[0] = grainTextureSize.m_width;
+            constants.m_grainTextureSize[1] = grainTextureSize.m_height;
+            
             AZ_Assert(GetOutputCount() > 0, "FilmGrainPass: No output bindings!");
             RPI::PassAttachment* outputAttachment = GetOutputBinding(0).GetAttachment().get();
 

@@ -14,7 +14,7 @@ namespace AZ
     {
         namespace FilmGrain
         {
-            static constexpr float DefaultIntensity = 1.0f;
+            static constexpr float DefaultIntensity = 0.2f;
             static constexpr float DefaultLuminanceDampening = 0.0f;
             static constexpr float DefaultTilingScale = 1.0f;
             static const constexpr char* DefaultGrainPath = "textures/FilmGrain.jpg.streamingimage";
