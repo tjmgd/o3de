@@ -51,7 +51,7 @@ set(FILES
     Include/Atom/Feature/PostProcess/Bloom/BloomConstants.h
     Include/Atom/Feature/PostProcess/Bloom/BloomParams.inl
     Include/Atom/Feature/PostProcess/Bloom/BloomSettingsInterface.h
-	Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h
+    Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainConstants.h
     Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainParams.inl
     Include/Atom/Feature/PostProcess/FilmGrain/FilmGrainSettingsInterface.h
     Include/Atom/Feature/PostProcess/ColorGrading/HDRColorGradingParams.inl
